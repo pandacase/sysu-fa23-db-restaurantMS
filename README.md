@@ -2,8 +2,8 @@
 
 package | version
 --- | ---
-`node.js -v` | `v18.18.2`
-`npm -v` | `9.8.1`
+`node.js` | `v18.18.2`
+`npm ` | `v9.8.1`
 
 ### FrontEnd
 
