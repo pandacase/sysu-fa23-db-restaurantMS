@@ -1,11 +1,18 @@
-# hello-world
+## Env info
 
-This template should help get you started developing with Vue 3 in Vite.
+package | version
+--- | ---
+`node.js -v` | `v18.18.2`
+`npm -v` | `9.8.1`
 
-## Recommended IDE Setup
+### FrontEnd
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+```bash
+├── @vitejs/plugin-vue@4.5.0
+├── vite@4.5.0
+└── vue@3.3.9
+```
 
-## Customize configuration
+### BackEnd
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+> uninitialized
