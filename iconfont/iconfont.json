@@ -1,0 +1,184 @@
+{
+  "id": "4373568",
+  "name": "management system",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "38441525",
+      "name": "编辑-线",
+      "font_class": "bianji-xian",
+      "unicode": "e79f",
+      "unicode_decimal": 59295
+    },
+    {
+      "icon_id": "38441526",
+      "name": "表单-线",
+      "font_class": "biaodan-xian",
+      "unicode": "e7a0",
+      "unicode_decimal": 59296
+    },
+    {
+      "icon_id": "38441536",
+      "name": "关闭 2",
+      "font_class": "a-guanbi2",
+      "unicode": "e7a1",
+      "unicode_decimal": 59297
+    },
+    {
+      "icon_id": "38441538",
+      "name": "关闭、取消-线",
+      "font_class": "a-guanbiquxiao-xian",
+      "unicode": "e7a2",
+      "unicode_decimal": 59298
+    },
+    {
+      "icon_id": "38441540",
+      "name": "复制链接",
+      "font_class": "fuzhilianjie",
+      "unicode": "e7a3",
+      "unicode_decimal": 59299
+    },
+    {
+      "icon_id": "38441543",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e7a4",
+      "unicode_decimal": 59300
+    },
+    {
+      "icon_id": "38441555",
+      "name": "更多-线",
+      "font_class": "gengduo-xian",
+      "unicode": "e7a5",
+      "unicode_decimal": 59301
+    },
+    {
+      "icon_id": "38441558",
+      "name": "箭头-下⬇️",
+      "font_class": "a-jiantou-xia",
+      "unicode": "e7a6",
+      "unicode_decimal": 59302
+    },
+    {
+      "icon_id": "38441559",
+      "name": "箭头-右➡️",
+      "font_class": "a-jiantou-you",
+      "unicode": "e7a7",
+      "unicode_decimal": 59303
+    },
+    {
+      "icon_id": "38441561",
+      "name": "箭头-上⬆️",
+      "font_class": "a-jiantou-shang",
+      "unicode": "e7a8",
+      "unicode_decimal": 59304
+    },
+    {
+      "icon_id": "38441562",
+      "name": "箭头-左⬅️",
+      "font_class": "a-jiantou-zuo",
+      "unicode": "e7a9",
+      "unicode_decimal": 59305
+    },
+    {
+      "icon_id": "38441575",
+      "name": "时间-线",
+      "font_class": "shijian-xian",
+      "unicode": "e7aa",
+      "unicode_decimal": 59306
+    },
+    {
+      "icon_id": "38441580",
+      "name": "收藏-线",
+      "font_class": "shoucang-xian",
+      "unicode": "e7ab",
+      "unicode_decimal": 59307
+    },
+    {
+      "icon_id": "38441581",
+      "name": "搜索-线",
+      "font_class": "sousuo-xian",
+      "unicode": "e7ac",
+      "unicode_decimal": 59308
+    },
+    {
+      "icon_id": "38441586",
+      "name": "提示-线",
+      "font_class": "tishi-xian",
+      "unicode": "e7ad",
+      "unicode_decimal": 59309
+    },
+    {
+      "icon_id": "38441593",
+      "name": "添加-线",
+      "font_class": "tianjia-xian",
+      "unicode": "e7ae",
+      "unicode_decimal": 59310
+    },
+    {
+      "icon_id": "38441594",
+      "name": "刷新-线",
+      "font_class": "shuaxin-xian",
+      "unicode": "e7af",
+      "unicode_decimal": 59311
+    },
+    {
+      "icon_id": "38441595",
+      "name": "添加-列表",
+      "font_class": "tianjia-liebiao",
+      "unicode": "e7b0",
+      "unicode_decimal": 59312
+    },
+    {
+      "icon_id": "38441596",
+      "name": "下载-线",
+      "font_class": "xiazai-xian",
+      "unicode": "e7b1",
+      "unicode_decimal": 59313
+    },
+    {
+      "icon_id": "38441598",
+      "name": "日期-线",
+      "font_class": "riqi-xian",
+      "unicode": "e7b2",
+      "unicode_decimal": 59314
+    },
+    {
+      "icon_id": "38441599",
+      "name": "疑问-线",
+      "font_class": "yiwen-xian",
+      "unicode": "e7b3",
+      "unicode_decimal": 59315
+    },
+    {
+      "icon_id": "38441600",
+      "name": "pin-线",
+      "font_class": "pin-xian",
+      "unicode": "e7b4",
+      "unicode_decimal": 59316
+    },
+    {
+      "icon_id": "38441601",
+      "name": "删除-线",
+      "font_class": "shanchu-xian",
+      "unicode": "e7b5",
+      "unicode_decimal": 59317
+    },
+    {
+      "icon_id": "38441603",
+      "name": "设置-线",
+      "font_class": "shezhi-xian",
+      "unicode": "e7b6",
+      "unicode_decimal": 59318
+    },
+    {
+      "icon_id": "38441606",
+      "name": "重置-线",
+      "font_class": "zhongzhi-xian",
+      "unicode": "e7b7",
+      "unicode_decimal": 59319
+    }
+  ]
+}
