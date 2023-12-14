@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Restaurant Management System App"/>
+    <HelloWorld msg="Welcome to Restaurant Management App"/>
   </div>
 </template>
 
