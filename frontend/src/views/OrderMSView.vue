@@ -71,6 +71,11 @@ export default {
 .floating-menu {
   position: fixed;
   top: 50%; /* 调整位置，使菜单垂直居中 */
-  right: 20px;
+  right: 150px;
+}
+
+.floating-menu button {
+  display: block;
+  margin: 20px 0;
 }
 </style>
