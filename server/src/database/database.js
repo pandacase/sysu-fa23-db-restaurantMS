@@ -93,11 +93,11 @@ class dbService {
         }
     }
 
-    async updateTable(id, type, customer_num) {
+    async updateTable(id, table_id, type, customer_num) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
-                connection.query(query, [id], (err, result) => {
+                const query = "UPDATE tables SET table_id = ?, type = ?, customer_num = ? WHERE id = ?;";
+                connection.query(query, [table_id, type, customer_num, id], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 });
