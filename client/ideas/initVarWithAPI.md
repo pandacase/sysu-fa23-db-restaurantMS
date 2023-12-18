@@ -88,3 +88,120 @@ onMounted(async () => {
 通过这样的修改，您的 Vue 组件将会在挂载后从 `http://localhost:5000/get` 接口获取数据，并渲染在界面上。
 
 请注意，在实际使用中，您需要确保后端接口 `http://localhost:5000/get` 可以正常响应，并返回正确的数据格式。另外，还需要处理请求的错误情况，比如网络故障或接口返回错误信息等。
+
+---
+
+## Q:
+
+我想写一个 table 组件，内含有表头和表项。其中表项已经从后端数据库获取，是数据库返回的一行行内容经过json解析后的内容。
+现在有2个子页面都需要导入这个组件，但是两个子页面导入的时候，我需要让这个 table 组件根据需求变换表头。比如 `/order` 下的表头是 `id, name, item`, 而 `/menu` 子页面下导入组件时，表头是 `id, price` 。请问如何设计？
+
+## A:
+
+你可以通过传递 props 参数给 table 组件来实现根据需求变换表头的功能。通过在不同的子页面中传递不同的表头数据到 table 组件中，你可以根据不同的需求来渲染不同的表头。
+
+下面是一个示例的 table 组件的设计：
+
+```vue
+<template>
+  <table>
+    <thead>
+      <tr>
+        <th v-for="column in columns" :key="column">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in items" :key="item.id">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <!-- 其他列根据需求渲染 -->
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script>
+export default {
+  props: {
+    columns: {
+      type: Array,
+      required: true
+    },
+    items: {
+      type: Array,
+      required: true
+    }
+  }
+}
+</script>
+
+<style>
+/* 样式定义 */
+</style>
+```
+
+在 `/order` 子页面中使用 table 组件时，你可以传递表头数据为 `id, name, item`：
+
+```vue
+<template>
+  <div>
+    <h1>Order Page</h1>
+    <Table :columns="['id', 'name', 'item']" :items="orderItems" />
+  </div>
+</template>
+
+<script>
+import Table from '@/components/Table.vue';
+
+export default {
+  components: {
+    Table
+  },
+  data() {
+    return {
+      orderItems: [] // 从后端数据库获取的订单数据
+    }
+  },
+  // 其他逻辑
+}
+</script>
+
+<style scoped>
+/* 页面样式定义 */
+</style>
+```
+
+在 `/menu` 子页面中使用 table 组件时，你可以传递表头数据为 `id, price`：
+
+```vue
+<template>
+  <div>
+    <h1>Menu Page</h1>
+    <Table :columns="['id', 'price']" :items="menuItems" />
+  </div>
+</template>
+
+<script>
+import Table from '@/components/Table.vue';
+
+export default {
+  components: {
+    Table
+  },
+  data() {
+    return {
+      menuItems: [] // 从后端数据库获取的菜单数据
+    }
+  },
+  // 其他逻辑
+}
+</script>
+
+<style scoped>
+/* 页面样式定义 */
+</style>
+```
+
+通过使用不同的 props，你可以灵活地控制 table 组件的表头内容，从而根据页面需求渲染不同的表头。同时，在各个子页面中分别获取对应的数据，在 table 组件中渲染表项内容。
+
+这样设计的好处是，table 组件可以根据传入的 props 数据动态展示不同的表头，并且可以在各个子页面中复用，减少了重复的代码和逻辑。
