@@ -28,17 +28,16 @@ class dbService {
     // TABLE dishes
     async getAllDataFromDishes() {
         try {
-        
+            
         } catch (err) {
             console.log(err);
         }
     }
 
-
     // TABLE orders
     async getAllDataFromOrders() {
         try {
-        
+            
         } catch (err) {
             console.log(err);
         }
@@ -48,11 +47,20 @@ class dbService {
     // TABLE tables
     async getAllDataFromTables() {
         try {
-            
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM tables";
+                connection.query(query, (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            console.log(response);
+            return response;
         } catch (err) {
             console.log(err);
         }
     }
+
     
 }
 
