@@ -1,9 +1,6 @@
 <script>
-export function loadTable() {
+export default function loadTable() {
     console.log('Hello from myFunction!');
 }
 
-export function loadAllData() {
-    
-}
 </script>
