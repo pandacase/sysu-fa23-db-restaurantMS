@@ -1,6 +1,32 @@
+<script>
+// @ is an alias to /src
+import DataTable from '@/components/DataTable.vue'
+
+export default {
+  name: 'MenuMSView',
+  components: {
+    DataTable
+  }
+}
+</script>
+
+
 <template>
-    <div class="about">
-      <h1>This is an about page</h1>
+  <div class="tableMS">
+    <div>
+
     </div>
-  </template>
+
+    <DataTable/>
+
+    
+  </div>
+</template>
   
+
+
+<style>
+
+</style>
+
+
