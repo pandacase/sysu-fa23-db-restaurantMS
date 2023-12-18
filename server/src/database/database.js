@@ -48,7 +48,7 @@ class dbService {
     async getAllDataFromTables() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM tables";
+                const query = "SELECT * FROM tables;";
                 connection.query(query, (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
@@ -61,7 +61,69 @@ class dbService {
         }
     }
 
-    
+    async insertToTables(table_id, type) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO tables (table_id, type, customer_num) VALUES(?, ?, 0);";
+                connection.query(query, [table_id, type], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async deleteByIdFromTables(id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM tables WHERE id = ?;";
+                connection.query(query, [id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async updateTable(id, type, customer_num) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
+                connection.query(query, [id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async clearTableById(id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
+                connection.query(query, [id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = dbService;
