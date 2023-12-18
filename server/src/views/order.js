@@ -45,7 +45,7 @@ app.get('/search/price', (request, response) => {
     .catch(err => console.log(err));
 })
 
-// create
+// add
 app.post('/insert', (request, response) => {
     const { name } = request.body;
     const db = dbService.getDbServiceInstance();

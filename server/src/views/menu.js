@@ -32,7 +32,7 @@ app.get('/search/:name', (request, response) => {
     .catch(err => console.log(err));
 })
 
-// create
+// add
 app.post('/insert', (request, response) => {
     const { name } = request.body;
     const { price } = request.body;

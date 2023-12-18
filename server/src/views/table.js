@@ -22,7 +22,7 @@ app.get('/get', (request, response) => {
     .catch(err => console.log(err));
 });
 
-// create
+// add
 app.post('/insert', (request, response) => {
     const { table_id } = request.body;
     const { type } =request.body;
