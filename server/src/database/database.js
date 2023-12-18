@@ -25,5 +25,35 @@ class dbService {
         return instance ? instance : new dbService();
     }
 
+    // TABLE dishes
+    async getAllDataFromDishes() {
+        try {
+        
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    // TABLE orders
+    async getAllDataFromOrders() {
+        try {
+        
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    // TABLE tables
+    async getAllDataFromTables() {
+        try {
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
     
 }
+
+module.exports = dbService;

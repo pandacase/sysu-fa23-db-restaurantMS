@@ -1,3 +1,4 @@
+-- # in user root:
 
 create database restaurant;
 
