@@ -20,17 +20,17 @@ app.get('/get', (request, response) => {
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
-})
+});
 
 // create
 app.post('/insert', (request, response) => {
     const { table_id } = request.body;
     const { type } =request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(table_id);
+    const result = db.insertToTables(table_id, type);
     
     result
-    .then(data => response.json({data : data}))
+    .then(data => response.json({success : data}))
     .catch(err => console.log(err));
 });
 
@@ -38,7 +38,7 @@ app.post('/insert', (request, response) => {
 app.delete('/delete/:id', (request, response) => {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(id);
+    const result = db.deleteByIdFromTables(id);
 
     result
     .then(data => response.json({success : data}))
@@ -48,9 +48,21 @@ app.delete('/delete/:id', (request, response) => {
 // update
 app.patch('/update', (request, response) => {
     const { id } = request.body;
-    const { name } = request.body;
+    const { type } = request.body;
+    const { customer_num } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(id, name);
+    const result = db.updateTable(id, type, customer_num);
+
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+})
+
+// clear table
+app.patch('/clear:id', (request, response) => {
+    const { id } = request.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.clearTableById(id);
 
     result
     .then(data => response.json({success : data}))
