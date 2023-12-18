@@ -23,7 +23,7 @@ app.get('/get', (request, response) => {
 })
 
 // search
-app.get('/search/date', (request, response) => {
+app.get('/fliter/date', (request, response) => {
     const { date_left } = request.body;
     const { date_right } = request.body;
     const db = dbService.getDbServiceInstance();
@@ -34,7 +34,7 @@ app.get('/search/date', (request, response) => {
     .catch(err => console.log(err));
 })
 
-app.get('/search/price', (request, response) => {
+app.get('/fliter/price', (request, response) => {
     const { price_left } = request.body;
     const { price_right } = request.body;
     const db = dbService.getDbServiceInstance();
