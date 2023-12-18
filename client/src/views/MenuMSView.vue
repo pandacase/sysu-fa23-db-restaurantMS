@@ -1,5 +1,17 @@
+<script>
+// @ is an alias to /src
+import SearchBox from '@/components/SearchBox.vue'
+
+export default {
+  name: 'OrderMSView',
+  components: {
+    SearchBox
+  }
+}
+</script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="orderMS">
+    <SearchBox/>
   </div>
 </template>
