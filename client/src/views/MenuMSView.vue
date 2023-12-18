@@ -1,17 +1,15 @@
-<script>
+<script setup>
 // @ is an alias to /src
-import SearchBox from '@/components/SearchBox.vue'
+import SearchByName from '@/components/SearchByName.vue'
+import DataTable from '@/components/DataTable.vue'
 
-export default {
-  name: 'OrderMSView',
-  components: {
-    SearchBox
-  }
-}
+
 </script>
 
 <template>
   <div class="orderMS">
-    <SearchBox/>
+    <SearchByName/>
+
+    <DataTable/>
   </div>
 </template>
