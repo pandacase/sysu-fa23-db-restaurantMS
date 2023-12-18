@@ -25,8 +25,9 @@ app.get('/get', (request, response) => {
 // create
 app.post('/insert', (request, response) => {
     const { table_id } = request.body;
+    const { type } =request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(name);
+    const result = db.TMP(table_id);
     
     result
     .then(data => response.json({data : data}))
