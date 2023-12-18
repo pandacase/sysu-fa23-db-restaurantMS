@@ -26,7 +26,13 @@ export default {
 }
 
 .window {
-  
-  background-color: white;
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 120px;
+    background-color: white;
+    border: #000 solid 2px;
 }
 </style>
