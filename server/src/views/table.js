@@ -48,10 +48,11 @@ app.delete('/delete/:id', (request, response) => {
 // update
 app.patch('/update', (request, response) => {
     const { id } = request.body;
+    const { table_id } = request.body;
     const { type } = request.body;
     const { customer_num } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.updateTable(id, type, customer_num);
+    const result = db.updateTable(id, table_id, type, customer_num);
 
     result
     .then(data => response.json({success : data}))
