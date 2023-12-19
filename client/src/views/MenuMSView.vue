@@ -8,7 +8,7 @@ import DataTable from '@/components/DataTable.vue'
 
 <template>
   <div class="orderMS">
-    <SearchByName/>
+    <!-- <SearchByName/> -->
 
     <DataTable/>
   </div>
