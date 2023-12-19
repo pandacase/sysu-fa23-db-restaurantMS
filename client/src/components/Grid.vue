@@ -70,13 +70,13 @@ function capitalize(str) {
 
 <style>
 table {
-  border: 2px solid #42b983;
+  border: 2px solid #eec927;
   border-radius: 3px;
   background-color: #fff;
 }
 
 th {
-  background-color: #42b983;
+  background-color: #eec927;
   color: rgba(255, 255, 255, 0.66);
   cursor: pointer;
   user-select: none;
