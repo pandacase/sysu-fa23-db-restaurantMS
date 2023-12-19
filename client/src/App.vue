@@ -18,7 +18,7 @@
 }
 
 nav {
-  margin-bottom: 75px;
+  margin-bottom: 30px;
   padding: 30px;
   font-size: 25px;
 }
