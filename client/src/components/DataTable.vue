@@ -1,14 +1,29 @@
-<script>
-export default {
-  name: 'DataTable'
-}
+<script setup>
+  import DemoGrid from './Grid.vue'
+  import { ref } from 'vue'
+
+  const searchQuery = ref('')
+  const gridColumns = ['id', 'name', 'power']
+  const gridData = [
+  { name: 'Chuck Norris', power: Infinity },
+  { name: 'Bruce Lee', power: 9000 },
+  { name: 'Jackie Chan', power: 7000 },
+  { name: 'Jet Li', power: 8000 }
+]
 </script>
 
 <template>
-  <div class="dataTable">
-    
-  </div>
+  <form id="search">
+  Search <input name="query" v-model="searchQuery">
+  </form>
 
+  <br>
+
+  <DemoGrid
+    :data="gridData"
+    :columns="gridColumns"
+    :filter-key="searchQuery">
+  </DemoGrid>
 </template>
 
 
