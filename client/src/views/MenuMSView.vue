@@ -9,7 +9,7 @@ const dishesColumns = ref(['id', 'name', 'price', 'description', 'icon'])
 
 <template>
   <div class="orderMS">
-    <FloatingMenu/>
+    <FloatingMenu @refreshBtn="console.log('Refresh Click')"/>
 
     <DataTable :gridColumns="dishesColumns"/>
   </div>

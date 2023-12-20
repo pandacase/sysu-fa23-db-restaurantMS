@@ -13,7 +13,7 @@ const tablesColumns = ref(['id', 'table_id', 'type', 'customer_num'])
 
 <template>
   <div class="tableMS">
-    <FloatingMenu/>
+    <FloatingMenu @refreshBtn="console.log('Refresh Click')"/>
 
     <DataTable :gridColumns="tablesColumns"/>
   </div>

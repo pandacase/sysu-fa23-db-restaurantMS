@@ -12,7 +12,7 @@ const ordersColumns = ref(['id', 'time_added', 'item_list', 'total_price'])
 
 <template>
   <div class="orderMS">
-    <FloatingMenu/>
+    <FloatingMenu @refreshBtn="console.log('Refresh Click')"/>
 
     <DataTable :gridColumns="ordersColumns"/>
   </div>
