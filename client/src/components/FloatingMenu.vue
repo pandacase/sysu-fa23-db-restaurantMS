@@ -2,13 +2,48 @@
 <script setup>
 import Modal from './Modal.vue'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
+// Button 1: Back to top
 function scrollToTop() {
   const top = document.querySelector('#topNav')
   top.scrollIntoView({behavior: 'smooth'})
 }
 
+// Button 2: Add Data => Open modal
 const showAddModal = ref(false)
+
+// Button 3: refresh
+
+
+
+// Modal => Comfirm Btn handle
+const API_URL = `http://localhost:5000${route.path}`
+async function addData() {
+  const url = `${API_URL}/add`
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        table_id: 0,
+        type: 'small(2)'
+      })
+    })
+    const result = await response.json()
+    if (result.success) {
+      showAddModal = false
+      // fetchData()
+    } else {
+      alert('Network Err!')
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
 </script>
 
 <template>
@@ -16,11 +51,11 @@ const showAddModal = ref(false)
     <div class="btnList">
       <button id="backToTopBtn" class="iconfont icon-a-jiantou-shang" @click="scrollToTop"></button>
       <button id="addBtn" class="iconfont icon-tianjia-xian" @click="showAddModal = true"></button>
-      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click=""></button>
+      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click="$emit('refreshBtn')"></button>
     </div>
 
     <Teleport to="body">
-      <modal :show="showAddModal" @close="showAddModal = false">
+      <modal :show="showAddModal" @confirmBtn="addData" @cancelBtn="showAddModal = false">
         <template #header>
           <h3>custom header</h3>
         </template>
@@ -57,5 +92,4 @@ const showAddModal = ref(false)
 .btnList button:active {
   background-color: white;
 }
-
 </style>
