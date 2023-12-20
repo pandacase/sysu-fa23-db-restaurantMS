@@ -38,3 +38,4 @@ grant all on restaurant.tables to admin;
 
 ALTER USER 'admin' IDENTIFIED WITH mysql_native_password BY '1234';
 flush privileges;
+
