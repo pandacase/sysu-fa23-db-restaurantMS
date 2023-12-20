@@ -7,12 +7,11 @@ package | version
 
 ### FrontEnd
 
-```bash
-├── @vitejs/plugin-vue@4.5.0
-├── vite@4.5.0
-└── vue@3.3.9
-```
+framwork | version
+--- | ---
+`vite` | `v4.5.0`
+`vue ` | `v3.3.9`
 
 ### BackEnd
 
-> uninitialized
+`express.js` + `mysql`
