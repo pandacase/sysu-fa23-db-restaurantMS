@@ -11,13 +11,14 @@ const props = defineProps({
   gridColumns: {
     type: Array,
     required: true
-  }
+  },
 })
 
 const gridData = ref(null)
 const isLoaded = ref(false)
 const API_URL = `http://localhost:5000${route.path}`
-watchEffect(async () => {
+watchEffect(fetchData)
+async function fetchData() {
   const url = `${API_URL}/get`
   try {
     const response = await fetch(url)
@@ -27,10 +28,12 @@ watchEffect(async () => {
     const data = await response.json()
     gridData.value = data.data
     isLoaded.value = true;
+    console.log("okay")
   } catch (err) {
     console.log(err)
   }
-})
+}
+
 </script>
 
 <template>

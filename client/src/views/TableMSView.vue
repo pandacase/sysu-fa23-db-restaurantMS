@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { createApp } from 'vue'
+const eventBus = createApp({})
+
 // @ is an alias to /src
 import DataTable from '@/components/DataTable.vue'
 import FloatingMenu from '@/components/FloatingMenu.vue'

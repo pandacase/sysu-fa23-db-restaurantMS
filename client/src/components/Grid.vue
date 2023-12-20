@@ -39,9 +39,7 @@ function sortBy(key) {
   sortOrders.value[key] *= -1
 }
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
+
 </script>
 
 <template>
