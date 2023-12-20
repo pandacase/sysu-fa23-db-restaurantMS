@@ -28,7 +28,14 @@ class dbService {
     // TABLE dishes
     async getAllDataFromDishes() {
         try {
-            
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM dishes;";
+                connection.query(query, (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
         } catch (err) {
             console.log(err);
         }
@@ -37,7 +44,14 @@ class dbService {
     // TABLE orders
     async getAllDataFromOrders() {
         try {
-            
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM orders;";
+                connection.query(query, (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
         } catch (err) {
             console.log(err);
         }
@@ -54,7 +68,6 @@ class dbService {
                     resolve(result);
                 });
             });
-            console.log(response);
             return response;
         } catch (err) {
             console.log(err);
