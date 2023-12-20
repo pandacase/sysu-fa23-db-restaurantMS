@@ -22,37 +22,14 @@ app.get('/get', (request, response) => {
     .catch(err => console.log(err));
 })
 
-// search
-app.get('/fliter/date', (request, response) => {
-    const { date_left } = request.body;
-    const { date_right } = request.body;
-    const db = dbService.getDbServiceInstance();
-    const result = db.TMP(date);
-
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
-app.get('/fliter/price', (request, response) => {
-    const { price_left } = request.body;
-    const { price_right } = request.body;
-    const db = dbService.getDbServiceInstance();
-    const result = db.TMP(date);
-
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
 // add
-app.post('/insert', (request, response) => {
+app.post('/add', (request, response) => {
     const { name } = request.body;
     const db = dbService.getDbServiceInstance();
     const result = db.TMP(name);
     
     result
-    .then(data => response.json({data : data}))
+    .then(data => response.json({success : data}))
     .catch(err => console.log(err));
 });
 

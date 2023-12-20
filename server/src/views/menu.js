@@ -21,19 +21,8 @@ app.get('/get', (request, response) => {
     .catch(err => console.log(err));
 })
 
-// search
-app.get('/search/:name', (request, response) => {
-    const { name } = request.params;
-    const db = dbService.getDbServiceInstance();
-    const result = db.getByNameFromDishes(name);
-
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
 // add
-app.post('/insert', (request, response) => {
+app.post('/add', (request, response) => {
     const { name } = request.body;
     const { price } = request.body;
     const { description } = request.body;

@@ -23,7 +23,7 @@ app.get('/get', (request, response) => {
 });
 
 // add
-app.post('/insert', (request, response) => {
+app.post('/add', (request, response) => {
     const { table_id } = request.body;
     const { type } =request.body;
     const db = dbService.getDbServiceInstance();
