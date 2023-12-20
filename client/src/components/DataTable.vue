@@ -17,15 +17,11 @@ const props = defineProps({
 const gridData = ref(null)
 const isLoaded = ref(false)
 const API_URL = `http://localhost:5000${route.path}`
-
-
 watchEffect(async () => {
   const data = await fetchData(API_URL)
   gridData.value = data
   isLoaded.value = true
 })
-
-
 </script>
 
 <template>
