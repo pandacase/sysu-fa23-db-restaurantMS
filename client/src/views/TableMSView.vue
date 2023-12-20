@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 // @ is an alias to /src
 import DataTable from '@/components/DataTable.vue'
+import FloatingMenu from '@/components/FloatingMenu.vue'
 
 const tableList = ref([])
 
@@ -19,9 +20,7 @@ onMounted(async () => {
 
 <template>
   <div class="tableMS">
-    <div>
-
-    </div>
+    <FloatingMenu/>
 
     <DataTable/>
 
