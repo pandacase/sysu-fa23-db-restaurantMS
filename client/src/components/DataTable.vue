@@ -17,7 +17,8 @@ const props = defineProps({
 const gridData = ref(null)
 const isLoaded = ref(false)
 const API_URL = `http://localhost:5000${route.path}`
-watchEffect(async () => {
+watchEffect(fetchData)
+async function fetchData() {
   const url = `${API_URL}/get`
   try {
     const response = await fetch(url)
@@ -30,7 +31,7 @@ watchEffect(async () => {
   } catch (err) {
     console.log(err)
   }
-})
+}
 </script>
 
 <template>

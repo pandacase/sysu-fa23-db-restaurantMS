@@ -20,7 +20,6 @@ const showAddModal = ref(false)
     </div>
 
     <Teleport to="body">
-      <!-- 使用这个 modal 组件，传入 prop -->
       <modal :show="showAddModal" @close="showAddModal = false">
         <template #header>
           <h3>custom header</h3>
