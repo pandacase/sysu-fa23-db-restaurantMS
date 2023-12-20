@@ -88,7 +88,7 @@ td {
 
 th,
 td {
-  min-width: 120px;
+  min-width: 100px;
   padding: 10px 20px;
 }
 
