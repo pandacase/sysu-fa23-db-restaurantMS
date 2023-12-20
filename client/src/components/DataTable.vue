@@ -1,23 +1,16 @@
 <script setup>
 import DemoGrid from './Grid.vue'
-import { computed, ref, watchEffect } from 'vue'
+import { ref, watchEffect, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
 
 const searchQuery = ref('')
 
-const dishesColumns = ['id', 'name', 'price', 'description', 'icon']
-const ordersColumns = ['id', 'time_added', 'item_list', 'total_price']
-const tablesColumns = ['id', 'table_id', 'type', 'customer_num']
-
 const route = useRoute()
-const gridColumns = computed(() => {
-  const currentPath = route.path
-  if (currentPath.includes('/menu')) {
-    return dishesColumns
-  } else if (currentPath.includes('/order')) {
-    return ordersColumns
-  } else if (currentPath.includes('/table')) {
-    return tablesColumns
+
+const props = defineProps({
+  gridColumns: {
+    type: Array,
+    required: true
   }
 })
 
@@ -50,7 +43,7 @@ watchEffect(async () => {
         v-if="isLoaded"
         class="TableBody"
         :data="gridData"
-        :columns="gridColumns"
+        :columns="props.gridColumns"
         :filter-key="searchQuery">
       </DemoGrid>
   </div>

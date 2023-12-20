@@ -1,20 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 // @ is an alias to /src
 import DataTable from '@/components/DataTable.vue'
 import FloatingMenu from '@/components/FloatingMenu.vue'
 
-const tableList = ref([])
-
-onMounted(async () => {
-  try {
-    const response = await fetch('http://localhost:5000/table/get')
-    const data = await response.json()
-    tableList.value = data['data']
-  } catch (err) {
-    console.error(err)
-  }
-})
+const tablesColumns = ref(['id', 'table_id', 'type', 'customer_num'])
 </script>
 
 
@@ -22,7 +12,7 @@ onMounted(async () => {
   <div class="tableMS">
     <FloatingMenu/>
 
-    <DataTable/>
+    <DataTable :gridColumns="tablesColumns"/>
   </div>
 </template>
   
