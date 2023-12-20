@@ -18,11 +18,15 @@ const props = defineProps({
 
         <div class="modal-footer">
           <slot name="footer">
-            default footer
+            <button
+              class="model-default-buuton"
+              @click="$emit('confirmBtn')"
+            >Confirm
+            </button>
             <button
               class="modal-default-button"
-              @click="$emit('close')"
-            >OK</button>
+              @click="$emit('cancelBtn')"
+            >Cancel</button>
           </slot>
         </div>
       </div>
