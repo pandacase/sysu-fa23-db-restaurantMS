@@ -45,6 +45,7 @@ watchEffect(async () => {
     <form id="search">
       Search: <input name="query" v-model="searchQuery">
     </form>
+    <div v-if="!isLoaded">Loading...</div>
       <DemoGrid
         v-if="isLoaded"
         class="TableBody"
@@ -52,14 +53,13 @@ watchEffect(async () => {
         :columns="gridColumns"
         :filter-key="searchQuery">
       </DemoGrid>
-    <div v-if="!isLoaded">Loading...</div>
   </div>
 </template>
 
 <style scoped>
 .DataTable {
   margin: 0 auto;
-  width: 750px;
+  width: 800px;
 }
 
 .DataTable input {
@@ -73,6 +73,6 @@ watchEffect(async () => {
 }
 
 .TableBody {
-  margin: 50px auto;
+  margin: 25px auto;
 }
 </style>
