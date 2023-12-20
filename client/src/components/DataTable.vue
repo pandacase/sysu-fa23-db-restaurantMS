@@ -2,10 +2,10 @@
 import DemoGrid from './Grid.vue'
 import { ref, watchEffect, defineProps } from 'vue'
 import { useRoute } from 'vue-router'
+const route = useRoute()
+import { fetchData } from '@/components/FetchData.vue'
 
 const searchQuery = ref('')
-
-const route = useRoute()
 
 const props = defineProps({
   gridColumns: {
@@ -17,21 +17,15 @@ const props = defineProps({
 const gridData = ref(null)
 const isLoaded = ref(false)
 const API_URL = `http://localhost:5000${route.path}`
-watchEffect(fetchData)
-async function fetchData() {
-  const url = `${API_URL}/get`
-  try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(`Http error with status: ${response.status}`)
-    }
-    const data = await response.json()
-    gridData.value = data.data
-    isLoaded.value = true;
-  } catch (err) {
-    console.log(err)
-  }
-}
+
+
+watchEffect(async () => {
+  const data = await fetchData(API_URL)
+  gridData.value = data
+  isLoaded.value = true
+})
+
+
 </script>
 
 <template>
