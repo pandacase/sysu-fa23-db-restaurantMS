@@ -23,8 +23,6 @@ onMounted(async () => {
     <FloatingMenu/>
 
     <DataTable/>
-
-    
   </div>
 </template>
   

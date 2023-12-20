@@ -7,6 +7,7 @@ import DataTable from '@/components/DataTable.vue'
 
 <template>
   <div class="orderMS">
+    <FloatingMenu/>
 
     <DataTable/>
   </div>
