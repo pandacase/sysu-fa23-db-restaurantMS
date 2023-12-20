@@ -1,7 +1,7 @@
 
 <script setup>
 import Modal from './Modal.vue'
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 function scrollToTop() {
   const top = document.querySelector('#topNav')
@@ -9,7 +9,6 @@ function scrollToTop() {
 }
 
 const showAddModal = ref(false)
-
 </script>
 
 <template>
@@ -17,10 +16,11 @@ const showAddModal = ref(false)
     <div class="btnList">
       <button id="backToTopBtn" class="iconfont icon-a-jiantou-shang" @click="scrollToTop"></button>
       <button id="addBtn" class="iconfont icon-tianjia-xian" @click="showAddModal = true"></button>
-      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click="$emit('refreshBtnClicked')"></button>
+      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click=""></button>
     </div>
 
     <Teleport to="body">
+      <!-- 使用这个 modal 组件，传入 prop -->
       <modal :show="showAddModal" @close="showAddModal = false">
         <template #header>
           <h3>custom header</h3>

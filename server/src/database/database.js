@@ -35,6 +35,7 @@ class dbService {
                     resolve(result);
                 });
             });
+            console.log(response)
             return response;
         } catch (err) {
             console.log(err);
