@@ -65,7 +65,7 @@ function capitalize(str) {
       </tr>
     </tbody>
   </table>
-  <p v-else>No matches found.</p>
+  <p v-else>Empty result.</p>
 </template>
 
 <style>
