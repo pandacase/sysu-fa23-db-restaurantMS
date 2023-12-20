@@ -1,15 +1,32 @@
 
 <script setup>
+import Modal from './Modal.vue'
+import { ref } from 'vue'
 
+function scrollToTop() {
+  const top = document.querySelector('#topNav')
+  top.scrollIntoView({behavior: 'smooth'})
+}
+
+const showAddModal = ref(false)
 </script>
 
 <template>
   <div class="FloatingMenu">
     <div class="btnList">
-      <button id="backToTopBtn">Top</button>
-      <button id="refreshBtn">Re</button>
-      <button id="addBtn">Add</button>
+      <button id="backToTopBtn" class="iconfont icon-a-jiantou-shang" @click="scrollToTop"></button>
+      <button id="addBtn" class="iconfont icon-tianjia-xian" @click="showAddModal = true"></button>
+      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click=""></button>
     </div>
+
+    <Teleport to="body">
+      <!-- 使用这个 modal 组件，传入 prop -->
+      <modal :show="showAddModal" @close="showAddModal = false">
+        <template #header>
+          <h3>custom header</h3>
+        </template>
+      </modal>
+    </Teleport>
   </div>
 </template>
 
@@ -18,7 +35,7 @@
 
 .btnList {
   position: fixed;
-  top: 75%;
+  top: 70%;
   transform: translateY(-50%);
   right: 100px;
 }
@@ -27,7 +44,19 @@
   display: block;
   width: 50px;
   height: 50px;
+  border-radius: 20px;
+  border: none;
   margin: 20px 10px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.btnList button:hover {
+  border: 2px gray dashed;
+}
+
+.btnList button:active {
+  background-color: white;
 }
 
 </style>
