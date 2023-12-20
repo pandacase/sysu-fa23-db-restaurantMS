@@ -3,12 +3,12 @@ import DemoGrid from './Grid.vue'
 import { ref } from 'vue'
 
 const searchQuery = ref('')
-const gridColumns = ['id', 'name', 'price', 'description']
+const gridColumns = ['id', 'name', 'price', 'description', 'type']
 const gridData = [
-  { id: 1, name: 'Chuck Norris', price: 128, description: "none" },
-  { id: 2, name: 'Bruce Lee', price: 328, description: "none" },
-  { id: 3, name: 'Jackie Chan', price: 198, description: "none" },
-  { id: 4, name: 'Jet Li', price: 648, description: "none" }
+  { id: 1, name: 'Chuck Norris', price: 128, description: "none", type: "food" },
+  { id: 2, name: 'Bruce Lee', price: 328, description: "none", type: "food" },
+  { id: 3, name: 'Jackie Chan', price: 198, description: "none", type: "food" },
+  { id: 4, name: 'Jet Li', price: 648, description: "none", type: "food" }
 ]
 </script>
 
