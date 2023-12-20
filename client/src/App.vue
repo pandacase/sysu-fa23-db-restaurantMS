@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav id="topNav">
     <router-link to="/">Home</router-link> |
     <router-link to="/menu">Menu</router-link> |
     <router-link to="/order">Orders</router-link> |
