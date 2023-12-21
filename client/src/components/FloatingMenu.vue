@@ -1,7 +1,7 @@
 
 <script setup>
 import Modal from './Modal.vue'
-import { ref } from 'vue'
+import { ref, defineEmits } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
@@ -14,6 +14,7 @@ function scrollToTop() {
 // Button 2: Add Data => Open modal
 const showAddModal = ref(false)
 // Modal => Comfirm Btn handle
+const emit = defineEmits();
 const API_URL = `http://localhost:5000${route.path}`
 async function addData() {
   const url = `${API_URL}/add`
@@ -31,7 +32,7 @@ async function addData() {
     const result = await response.json()
     if (result.success) {
       showAddModal = false
-      $emit('reloadData')
+      emit('reloadData')
     } else {
       alert('Network Err!')
     }
