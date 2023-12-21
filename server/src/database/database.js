@@ -35,11 +35,22 @@ class dbService {
                     resolve(result);
                 });
             });
-            console.log(response)
             return response;
         } catch (err) {
             console.log(err);
         }
+    }
+
+    async insertToDishes() {
+
+    }
+
+    async deleteByIdFromDishes() {
+
+    }
+
+    async updateDish() {
+
     }
 
     // TABLE orders
@@ -58,6 +69,17 @@ class dbService {
         }
     }
 
+    async insertToOrders() {
+
+    }
+
+    async deleteByIdFromOrders() {
+
+    }
+
+    async updateOrder() {
+        
+    }
 
     // TABLE tables
     async getAllDataFromTables() {
