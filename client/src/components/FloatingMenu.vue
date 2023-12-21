@@ -13,11 +13,6 @@ function scrollToTop() {
 
 // Button 2: Add Data => Open modal
 const showAddModal = ref(false)
-
-// Button 3: refresh
-
-
-
 // Modal => Comfirm Btn handle
 const API_URL = `http://localhost:5000${route.path}`
 async function addData() {
@@ -36,7 +31,7 @@ async function addData() {
     const result = await response.json()
     if (result.success) {
       showAddModal = false
-      // fetchData()
+      $emit('reloadData')
     } else {
       alert('Network Err!')
     }
@@ -51,7 +46,7 @@ async function addData() {
     <div class="btnList">
       <button id="backToTopBtn" class="iconfont icon-a-jiantou-shang" @click="scrollToTop"></button>
       <button id="addBtn" class="iconfont icon-tianjia-xian" @click="showAddModal = true"></button>
-      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click="$emit('refreshBtn')"></button>
+      <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click="$emit('reloadData')"></button>
     </div>
 
     <Teleport to="body">

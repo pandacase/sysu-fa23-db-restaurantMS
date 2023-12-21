@@ -1,6 +1,6 @@
 <script setup>
 import DemoGrid from './Grid.vue'
-import { ref, watchEffect, defineProps } from 'vue'
+import { ref, watch, watchEffect, defineProps, defineEmits } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 import { fetchData } from '@/components/FetchData.vue'
@@ -11,9 +11,13 @@ const props = defineProps({
   gridColumns: {
     type: Array,
     required: true
+  },
+  reload: {
+    type: Boolean
   }
 })
 
+// load data
 const gridData = ref(null)
 const isLoaded = ref(false)
 const API_URL = `http://localhost:5000${route.path}`
@@ -21,6 +25,19 @@ watchEffect(async () => {
   const data = await fetchData(API_URL)
   gridData.value = data
   isLoaded.value = true
+})
+
+// reload data
+const emit = defineEmits()
+watch(() => props.reload, async (newValue, oldValue) => {
+  if (oldValue == false && newValue == true) {
+    isLoaded.value = false
+    const data = await fetchData(API_URL)
+    gridData.value = data
+    isLoaded.value = true
+    console.log('hi')
+    emit('reloadFinished')
+  }
 })
 </script>
 
