@@ -31,7 +31,7 @@ app.post('/add', (request, response) => {
     const result = db.insertToDishes(name);
 
     result
-    .then(data => response.json({data : data}))
+    .then(data => response.json({success : data}))
     .catch(err => console.log(err));
 });
 
@@ -54,7 +54,7 @@ app.patch('/update', (request, response) => {
     const { description } = request.body;
     // icon 
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(id, name);
+    const result = db.updateDish(id, name);
 
     result
     .then(data => response.json({success : data}))

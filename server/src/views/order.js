@@ -26,7 +26,7 @@ app.get('/get', (request, response) => {
 app.post('/add', (request, response) => {
     const { name } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(name);
+    const result = db.insertToOrders(name);
     
     result
     .then(data => response.json({success : data}))
@@ -37,7 +37,7 @@ app.post('/add', (request, response) => {
 app.delete('/delete/:id', (request, response) => {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(id);
+    const result = db.deleteByIdFromOrders(id);
 
     result
     .then(data => response.json({success : data}))
@@ -49,7 +49,7 @@ app.patch('/update', (request, response) => {
     const { id } = request.body;
     const { name } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.TMP(id, name);
+    const result = db.updateOrder(id, name);
 
     result
     .then(data => response.json({success : data}))
