@@ -16,7 +16,7 @@ connection.connect((err) => {
     if (err) {
         console.log(err.message);
     }
-    console.log('database:' + connection.state);
+    console.log('Database:' + connection.state);
 })
 
 
@@ -78,7 +78,7 @@ class dbService {
     }
 
     async updateOrder() {
-        
+
     }
 
     // TABLE tables
@@ -106,7 +106,6 @@ class dbService {
                     resolve(result.affectedRows);
                 });
             });
-            console.log(response);
             return response === 1 ? true : false;
         } catch (err) {
             console.log(err);
