@@ -97,11 +97,11 @@ class dbService {
         }
     }
 
-    async insertToTables(table_id, type) {
+    async insertToTables(table_id, type, customer_num) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO tables (table_id, type, customer_num) VALUES(?, ?, 0);";
-                connection.query(query, [table_id, type], (err, result) => {
+                const query = "INSERT INTO tables (table_id, type, customer_num) VALUES(?, ?, ?);";
+                connection.query(query, [table_id, type, customer_num], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 });
