@@ -19,7 +19,7 @@ const props = defineProps({
         <div class="modal-footer">
           <slot name="footer">
             <button
-              class="model-default-buuton"
+              class="modal-default-button"
               @click="$emit('confirmBtn')"
             >Confirm
             </button>
@@ -66,8 +66,30 @@ const props = defineProps({
   margin: 20px 0;
 }
 
+.modal-body label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-body input, .modal-body textarea, .modal-body select {
+  width: 80%;
+  
+  margin-bottom: 10px;
+}
+
 .modal-default-button {
-  float: right;
+  float: left;
+  width: 50%;
+  height: 35px;
+  border: none;
+}
+
+.modal-default-button:hover {
+  border: gray solid 2px;
+}
+
+.modal-default-button:active {
+  background-color: white;
 }
 
 /*
