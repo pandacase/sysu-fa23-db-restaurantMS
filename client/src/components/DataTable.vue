@@ -39,31 +39,18 @@ watch(() => props.reload, async (newValue, oldValue) => {
   }
 })
 
-// show content menu of row
-function showContentMenuOfRow(event, entry) {
-  showMenu.value = true
-  event.preventDefault()
-  menuX.value = event.clientX
-  menuY.value = event.clientY
-  console.log(entry.id)
+// handle option
+function optionEdit(entry) {
+  emit('optionEdit', entry)
 }
 
-import ContextMenu from '@/components/ContextMenuOfRow.vue'
-const showMenu = ref(false)
-const menuX = ref(0)
-const menuY = ref(0)
-const contextMenuActions = ref([
-  { label: 'Edit', action: 'edit' },
-  { label: 'Delete', action: 'delete' },
-])
-
-function handleAction(action) {
-  console.log(action)
+function optionDelete(id) {
+  emit('optionDelete', id)
 }
 </script>
 
 <template>
-  <div class="DataTable" >
+  <div class="DataTable" @click="showMenu = false">
     <form id="search">
       Search: <input name="query" v-model="searchQuery">
     </form>
@@ -76,15 +63,8 @@ function handleAction(action) {
       :data="gridData"
       :columns="props.gridColumns"
       :filter-key="searchQuery"
-      @tableRowRightClicked="showContentMenuOfRow"
-    />
-
-    <ContextMenu
-      v-if="showMenu"
-      :x="menuX"
-      :y="menuY"
-      :actions="contextMenuActions"
-      @actionSelected="handleAction"
+      @editBtnClicked="optionEdit"
+      @deleteBtnClicked="optionDelete"
     />
   </div>
 </template>
@@ -92,7 +72,7 @@ function handleAction(action) {
 <style scoped>
 .DataTable {
   margin: 0 auto;
-  width: 800px;
+  width: 100%;
 }
 
 .DataTable input {
