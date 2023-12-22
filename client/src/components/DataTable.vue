@@ -35,7 +35,6 @@ watch(() => props.reload, async (newValue, oldValue) => {
     const data = await fetchData(API_URL)
     gridData.value = data
     isLoaded.value = true
-    console.log('hi')
     emit('reloadFinished')
   }
 })
