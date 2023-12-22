@@ -1,5 +1,5 @@
 <script setup>
-import DemoGrid from './Grid.vue'
+import Grid from '@/components/Grid.vue'
 import { ref, watch, watchEffect, defineProps, defineEmits } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -38,6 +38,28 @@ watch(() => props.reload, async (newValue, oldValue) => {
     emit('reloadFinished')
   }
 })
+
+// show content menu of row
+function showContentMenuOfRow(event, entry) {
+  showMenu.value = true
+  event.preventDefault()
+  menuX.value = event.clientX
+  menuY.value = event.clientY
+  console.log(entry.id)
+}
+
+import ContextMenu from '@/components/ContextMenuOfRow.vue'
+const showMenu = ref(false)
+const menuX = ref(0)
+const menuY = ref(0)
+const contextMenuActions = ref([
+  { label: 'Edit', action: 'edit' },
+  { label: 'Delete', action: 'delete' },
+])
+
+function handleAction(action) {
+  console.log(action)
+}
 </script>
 
 <template>
@@ -45,14 +67,25 @@ watch(() => props.reload, async (newValue, oldValue) => {
     <form id="search">
       Search: <input name="query" v-model="searchQuery">
     </form>
+    
     <div v-if="!isLoaded">Loading...</div>
-      <DemoGrid
-        v-if="isLoaded"
-        class="TableBody"
-        :data="gridData"
-        :columns="props.gridColumns"
-        :filter-key="searchQuery">
-      </DemoGrid>
+    
+    <Grid
+      v-if="isLoaded"
+      class="TableBody"
+      :data="gridData"
+      :columns="props.gridColumns"
+      :filter-key="searchQuery"
+      @tableRowRightClicked="showContentMenuOfRow"
+    />
+
+    <ContextMenu
+      v-if="showMenu"
+      :x="menuX"
+      :y="menuY"
+      :actions="contextMenuActions"
+      @actionSelected="handleAction"
+    />
   </div>
 </template>
 
