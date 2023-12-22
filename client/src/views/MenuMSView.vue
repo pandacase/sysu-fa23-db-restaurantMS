@@ -4,15 +4,16 @@ import { ref } from 'vue'
 import DataTable from '@/components/DataTable.vue'
 import FloatingMenu from '@/components/FloatingMenu.vue'
 
-const dishesColumns = ref(['id', 'name', 'price', 'description', 'icon'])
+const dishesColumns = ref(['id', 'name', 'price', 'description'])
+const dishesColumnsToAdd = ref(['name', 'price', 'description'])
 
 const reload = ref(false)
 </script>
 
 <template>
   <div class="orderMS">
-    <FloatingMenu @reloadData="reload = true"/>
-
     <DataTable :gridColumns="dishesColumns" :reload="reload" @reloadFinished="reload = false"/>
+    
+    <FloatingMenu :gridColumnsToAdd="dishesColumnsToAdd" @reloadData="reload = true"/>
   </div>
 </template>
