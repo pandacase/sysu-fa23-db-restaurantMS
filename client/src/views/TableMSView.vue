@@ -25,9 +25,9 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-const emit = defineEmits();
+const emit = defineEmits()
 const API_URL = `http://localhost:5000${route.path}`
-async function sumitData() {
+async function sumitTable() {
   const url = `${API_URL}/add`
   try {
     const response = await fetch(url, {
@@ -57,12 +57,22 @@ async function sumitData() {
 
 <template>
   <div class="tableMS">
-    <DataTable :gridColumns="tablesColumns" :reload="reload" @reloadFinished="reload = false"/>
+    <DataTable 
+      :gridColumns="tablesColumns" 
+      :reload="reload" 
+      @reloadFinished="reload = false"
+    />
     
-    <FloatingMenu @showModal="showModal = true" @reloadData="reload = true"/>
+    <FloatingMenu 
+      @showModal="showModal = true" 
+      @reloadData="reload = true"
+    />
 
     <Teleport to="body">
-      <modal :show="showModal" @confirmBtn="sumitData" @cancelBtn="showModal = false">
+      <modal 
+        :show="showModal" 
+        @confirmBtn="sumitTable" 
+        @cancelBtn="showModal = false">
         <template #header>
           <h3>Add a new {{ route.path.substring(1) }}</h3>
         </template>
