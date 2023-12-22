@@ -20,19 +20,31 @@ const customer_num = ref(0)
 // refresh event
 const reload = ref(false)
 
+// api path router
+const apiPath = ref('')
+function handleSubmit() {
+  if (apiPath.value === '/add') {
+    addTable()
+  } else if (apiPath.value === '/update') {
+    updateTable()
+  }
+}
+
 // row options
 const id = ref(null)
 function optionEdit(entry) {
-  showModal = true
+  showModal.value = true
+  // show the original value to user
   id.value = entry.id
   table_id.value = entry.table_id
   type.value = entry.type
   customer_num.value = entry.customer_num
-  updateTable()
+  // set the apiPath
+  apiPath.value = '/update'
 }
 
-function optionDelete(id) {
-  id.value = id
+function optionDelete(rowId) {
+  id.value = rowId
   deleteTable()
 }
 
@@ -43,6 +55,13 @@ function capitalize(str) {
 
 const emit = defineEmits()
 const API_URL = `http://localhost:5000${route.path}`
+
+function clearRef() {
+  id.value = null
+  table_id.value = null
+  type.value = ''
+  customer_num.value = 0
+}
 
 async function addTable() {
   const url = `${API_URL}/add`
@@ -62,10 +81,7 @@ async function addTable() {
     if (result.success) {
       showModal.value = false
       reload.value = true
-
-      table_id.value = null
-      type.value = ''
-      customer_num.value = 0
+      clearRef()
     } else {
       alert('Network Err!')
     }
@@ -93,6 +109,7 @@ async function updateTable() {
     if (result.success) {
       showModal.value = false
       reload.value = true
+      clearRef()
     } else {
       alert('Network Err!')
     }
@@ -102,23 +119,15 @@ async function updateTable() {
 }
 
 async function deleteTable() {
-  const url = `${API_URL}/delete`
+  const url = `${API_URL}/delete/${id.value}`
   try {
     const response = await fetch(url, {
-      headers: {
-        'Content-type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        table_id: table_id.value,
-        type: type.value,
-        customer_num: customer_num.value
-      })
+      method: 'DELETE'
     })
     const result = await response.json()
     if (result.success) {
-      showModal.value = false
       reload.value = true
+      clearRef()
     } else {
       alert('Network Err!')
     }
@@ -140,15 +149,15 @@ async function deleteTable() {
     />
     
     <FloatingMenu 
-      @showModal="showModal = true" 
+      @showModal="showModal = true; apiPath = '/add'" 
       @reloadData="reload = true"
     />
 
     <Teleport to="body">
       <modal 
         :show="showModal" 
-        @confirmBtn="addTable" 
-        @cancelBtn="showModal = false; table_id = null; type = ''; customer_num = 0">
+        @confirmBtn="handleSubmit" 
+        @cancelBtn="showModal = false; clearRef()">
         <template #header>
           <h3>Add a new {{ route.path.substring(1) }}</h3>
         </template>
