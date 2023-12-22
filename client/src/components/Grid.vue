@@ -42,6 +42,21 @@ function sortBy(key) {
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+// row hover
+const isHover = ref({})
+for (const row of props.data) {
+  isHover[row.id] = false
+}
+console.log(isHover)
+
+function handleMouseHover(id) {
+  isHover.value[id] = true
+}
+
+function handleMouseLeave(id) {
+  isHover.value[id] = false
+}
 </script>
 
 <template>
@@ -52,26 +67,62 @@ function capitalize(str) {
           @click="sortBy(key)"
           :class="{ active: sortKey == key }">
           {{ capitalize(key) }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          <span class="arrow" 
+            :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
+
+        <th class="optionTh">
+          Options
+        </th>        
       </tr>
     </thead>
     <tbody>
       <tr 
-        v-for="entry in filteredData"
+        v-for="entry in filteredData" 
         :key="entry.id"
-        @contextmenu.prevent="$emit('tableRowRightClicked', $event, entry)">
+        :class="{'hoverRow': isHover[entry.id]}"
+        @mouseover="handleMouseHover(entry.id)"
+        @mouseleave="handleMouseLeave(entry.id)"
+        >
         <td v-for="key in columns">
           {{entry[key]}}
+        </td>
+        
+        <td class="optionTd">
+          <button class="iconfont icon-bianji-xian" 
+            @click="$emit('editBtnClicked', entry)"></button>
+          <button class="iconfont icon-shanchu-xian"
+            @click="$emit('deleteBtnClicked', entry.id)"></button>
         </td>
       </tr>
     </tbody>
   </table>
-  <p v-else>Empty result.</p>
+  <p v-else>Empty result</p>
 </template>
 
-<style>
+<style scoped>
+@import url('../icons/iconfont.css');
+
+/* row hover */
+.hoverRow td {
+  background-color: white;
+}
+
+/* button style */
+.optionTd button {
+  margin: 0 5px;
+  border: 2px solid #f9f9f9;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.optionTd button:hover {
+  border: 2px dashed gray;
+}
+
+/* nomal style */
 table {
   border: 2px solid #eec927;
   border-radius: 3px;
@@ -102,6 +153,10 @@ th.active {
 th.active .arrow {
   opacity: 1;
 }
+
+/* tr td:hover {
+  background-color: white;
+} */
 
 .arrow {
   display: inline-block;
