@@ -12,7 +12,7 @@ function scrollToTop() {
   <div class="FloatingMenu">
     <div class="btnList">
       <button id="backToTopBtn" class="iconfont icon-a-jiantou-shang" @click="scrollToTop"></button>
-      <button id="addBtn" class="iconfont icon-tianjia-xian" @click="$emit('showModal')"></button>
+      <button id="addBtn" class="iconfont icon-tianjia-xian" @click="$emit('showModal', '/add')"></button>
       <button id="refreshBtn" class="iconfont icon-zhongzhi-xian" @click="$emit('reloadData')"></button>
     </div>
   </div>
