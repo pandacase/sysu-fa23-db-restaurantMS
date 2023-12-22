@@ -35,6 +35,8 @@ const props = defineProps({
 
 .context-menu .options {
   cursor: pointer;
+  text-align: left;
+  padding: 5px;
 }
 
 .context-menu div:hover {
