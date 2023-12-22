@@ -26,8 +26,9 @@ app.get('/get', (request, response) => {
 app.post('/add', (request, response) => {
     const { table_id } = request.body;
     const { type } =request.body;
+    const { customer_num } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.insertToTables(table_id, type);
+    const result = db.insertToTables(table_id, type, customer_num);
     
     result
     .then(data => response.json({success : data}))
