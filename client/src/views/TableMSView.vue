@@ -7,30 +7,20 @@ import DataTable from '@/components/DataTable.vue'
 import FloatingMenu from '@/components/FloatingMenu.vue'
 import Modal from '@/components/Modal.vue'
 
-// render the DataTable
+/* render the DataTable */
 const tablesColumns = ref(['id', 'table_id', 'type', 'customer_num'])
 
-// render the Modal
+/* render the Modal */
 const showModal = ref(false)
 const modalContentColumns = ref(['table_id', 'type', 'customer_num'])
 const table_id = ref(null)
 const type = ref('')
 const customer_num = ref(0)
 
-// refresh event
+/* refresh event */
 const reload = ref(false)
 
-// api path router
-const apiPath = ref('')
-function handleSubmit() {
-  if (apiPath.value === '/add') {
-    addTable()
-  } else if (apiPath.value === '/update') {
-    updateTable()
-  }
-}
-
-// row options
+/* row options */
 const id = ref(null)
 function optionEdit(entry) {
   showModal.value = true
@@ -48,7 +38,17 @@ function optionDelete(rowId) {
   deleteTable()
 }
 
-// utils
+// api path router
+const apiPath = ref('')
+function handleSubmit() {
+  if (apiPath.value === '/add') {
+    addTable()
+  } else if (apiPath.value === '/update') {
+    updateTable()
+  }
+}
+
+/* utils */
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
@@ -63,6 +63,7 @@ function clearRef() {
   customer_num.value = 0
 }
 
+/* http methods */
 async function addTable() {
   const url = `${API_URL}/add`
   try {
