@@ -58,7 +58,10 @@ function capitalize(str) {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="entry in filteredData">
+      <tr 
+        v-for="entry in filteredData"
+        :key="entry.id"
+        @contextmenu.prevent="$emit('tableRowRightClicked', $event, entry)">
         <td v-for="key in columns">
           {{entry[key]}}
         </td>
