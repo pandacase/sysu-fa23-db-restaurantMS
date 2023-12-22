@@ -20,6 +20,22 @@ const customer_num = ref(0)
 // refresh event
 const reload = ref(false)
 
+// row options
+const id = ref(null)
+function optionEdit(entry) {
+  showModal = true
+  id.value = entry.id
+  table_id.value = entry.table_id
+  type.value = entry.type
+  customer_num.value = entry.customer_num
+  updateTable()
+}
+
+function optionDelete(id) {
+  id.value = id
+  deleteTable()
+}
+
 // utils
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
@@ -27,8 +43,66 @@ function capitalize(str) {
 
 const emit = defineEmits()
 const API_URL = `http://localhost:5000${route.path}`
-async function sumitTable() {
+
+async function addTable() {
   const url = `${API_URL}/add`
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        table_id: table_id.value,
+        type: type.value,
+        customer_num: customer_num.value
+      })
+    })
+    const result = await response.json()
+    if (result.success) {
+      showModal.value = false
+      reload.value = true
+
+      table_id.value = null
+      type.value = ''
+      customer_num.value = 0
+    } else {
+      alert('Network Err!')
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function updateTable() {
+  const url = `${API_URL}/update`
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        id: id.value,
+        table_id: table_id.value,
+        type: type.value,
+        customer_num: customer_num.value
+      })
+    })
+    const result = await response.json()
+    if (result.success) {
+      showModal.value = false
+      reload.value = true
+    } else {
+      alert('Network Err!')
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function deleteTable() {
+  const url = `${API_URL}/delete`
   try {
     const response = await fetch(url, {
       headers: {
@@ -61,6 +135,8 @@ async function sumitTable() {
       :gridColumns="tablesColumns" 
       :reload="reload" 
       @reloadFinished="reload = false"
+      @optionEdit="optionEdit"
+      @optionDelete="optionDelete"
     />
     
     <FloatingMenu 
@@ -71,8 +147,8 @@ async function sumitTable() {
     <Teleport to="body">
       <modal 
         :show="showModal" 
-        @confirmBtn="sumitTable" 
-        @cancelBtn="showModal = false">
+        @confirmBtn="addTable" 
+        @cancelBtn="showModal = false; table_id = null; type = ''; customer_num = 0">
         <template #header>
           <h3>Add a new {{ route.path.substring(1) }}</h3>
         </template>
@@ -110,5 +186,3 @@ async function sumitTable() {
 <style>
 
 </style>
-
-
