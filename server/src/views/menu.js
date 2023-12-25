@@ -28,7 +28,7 @@ app.post('/add', (request, response) => {
     const { description } = request.body;
     // icon 
     const db = dbService.getDbServiceInstance();
-    const result = db.insertToDishes(name);
+    const result = db.insertToDishes(name, price, description);
 
     result
     .then(data => response.json({success : data}))
@@ -54,7 +54,7 @@ app.patch('/update', (request, response) => {
     const { description } = request.body;
     // icon 
     const db = dbService.getDbServiceInstance();
-    const result = db.updateDish(id, name);
+    const result = db.updateDish(id, name, price, description);
 
     result
     .then(data => response.json({success : data}))

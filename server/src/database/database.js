@@ -41,16 +41,51 @@ class dbService {
         }
     }
 
-    async insertToDishes() {
-
+    async insertToDishes(name, price, description) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO dishes (name, price, description) VALUES (?, ?, ?);";
+                connection.query(query, [name, price, description], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    async deleteByIdFromDishes() {
-
+    async deleteByIdFromDishes(id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM dishes WHERE id = ?;";
+                connection.query(query, [id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    async updateDish() {
-
+    async updateDish(id, name, price, description) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE dishes SET name = ?, price = ?, description = ? WHERE id = ?;";
+                connection.query(query, [name, price, description, id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     // TABLE orders
