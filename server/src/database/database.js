@@ -137,8 +137,21 @@ class dbService {
         }
     }
 
-    async updateOrder() {
-
+    async updateOrder(id, item_list, total_price) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE orders SET item_list = ?, total_price = ? WHERE id = ?;";
+                const item_list_json = JSON.stringify(item_list);
+                connection.query(query, [item_list_json, total_price, id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     // TABLE tables
