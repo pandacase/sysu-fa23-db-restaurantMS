@@ -20,7 +20,7 @@ const props = defineProps({
 // load data
 const gridData = ref(null)
 const isLoaded = ref(false)
-const API_URL = `http://localhost:5000${route.path}`
+const API_URL = `http://66.42.114.101:5000${route.path}`
 watchEffect(async () => {
   const data = await fetchData(API_URL)
   gridData.value = data
