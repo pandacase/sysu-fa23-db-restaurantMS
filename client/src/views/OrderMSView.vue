@@ -27,6 +27,7 @@ function optionEdit(entry) {
   // show the original value to user
   id.value = entry.id
   item_list.value = entry.item_list
+  item_list.value = item_list.value.substring(1, item_list.value.length - 1)
   total_price.value = entry.total_price
   // set the apiPath
   apiPath.value = '/update'
@@ -53,7 +54,7 @@ function capitalize(str) {
 }
 
 const emit = defineEmits()
-const API_URL = `http://localhost:5000${route.path}`
+const API_URL = `http://66.42.114.101:5000${route.path}`
 
 function clearRef() {
   id.value = null
