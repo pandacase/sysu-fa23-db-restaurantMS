@@ -24,9 +24,10 @@ app.get('/get', (request, response) => {
 
 // add
 app.post('/add', (request, response) => {
-    const { name } = request.body;
+    const { item_list } = request.body;
+    const { total_price } = request.body;
     const db = dbService.getDbServiceInstance();
-    const result = db.insertToOrders(name);
+    const result = db.insertToOrders(item_list, total_price);
     
     result
     .then(data => response.json({success : data}))

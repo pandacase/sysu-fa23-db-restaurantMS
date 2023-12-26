@@ -47,10 +47,10 @@ class dbService {
                 const query = "INSERT INTO dishes (name, price, description) VALUES (?, ?, ?);";
                 connection.query(query, [name, price, description], (err, result) => {
                     if (err) reject(new Error(err.message));
-                    resolve(result);
+                    resolve(result.affectedRows);
                 });
             });
-            return response;
+            return response === 1 ? true : false;
         } catch (err) {
             console.log(err);
         }
@@ -104,12 +104,37 @@ class dbService {
         }
     }
 
-    async insertToOrders() {
-
+    async insertToOrders(item_list, total_price) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO orders (time_added, item_list, total_price) VALUES (FROM_UNIXTIME(?, '%Y-%m-%d %H:%i:%s'), ?, ?);";
+                const item_list_json = JSON.stringify(item_list);
+                const time_stamp = Date.now() / 1000;   // Convert milliseconds to seconds
+                connection.query(query, [time_stamp, item_list_json, total_price], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    async deleteByIdFromOrders() {
-
+    async deleteByIdFromOrders(id) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "DELETE FROM orders WHERE id = ?;";
+                connection.query(query, [id], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                });
+            });
+            console.log(response);
+            return response === 1 ? true : false;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     async updateOrder() {
