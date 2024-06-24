@@ -68,4 +68,4 @@ jobs:
         # password: ${{ secrets.VPS_PASSWORD }}
         port: 22
         source: "./README.md"
-        target: ~
+        target: /root/
