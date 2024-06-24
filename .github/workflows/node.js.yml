@@ -1,0 +1,84 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'client/**'
+      - 'server/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'client/**'
+      - 'server/**'
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        path: client
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./client
+
+    - name: Build client
+      run: npm run build
+      working-directory: ./client
+
+    - name: Test client
+      run: npm test
+      working-directory: ./client
+
+    - name: Deploy to Apache
+      env:
+        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+        VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+      run: |
+        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@45.77.18.47 "rm -rf /var/www/html/*"
+        echo "$VPS_PASSWORD" | sshpass scp -r ./client/dist/* $VPS_USERNAME@45.77.18.47:/var/www/html/
+
+  build-server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        path: server
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./server
+
+    - name: Build server
+      run: npm run build
+      working-directory: ./server
+
+    - name: Test server
+      run: npm test
+      working-directory: ./server
+
+    - name: Deploy and start server with PM2
+      env:
+        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+        VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+      run: |
+        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@45.77.18.47 "cd /path/to/your/server && npm install && pm2 start src/app.js"
