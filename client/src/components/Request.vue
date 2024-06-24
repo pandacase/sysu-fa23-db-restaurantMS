@@ -14,4 +14,7 @@ export async function fetchData(API_URL) {
     console.log(err)
   }
 }
+
+
+
 </script>

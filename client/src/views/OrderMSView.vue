@@ -54,7 +54,7 @@ function capitalize(str) {
 }
 
 const emit = defineEmits()
-const API_URL = `http://66.42.114.101:5000${route.path}`
+const API_URL = `http://127.0.0.1:5000${route.path}`
 
 function clearRef() {
   id.value = null
@@ -62,7 +62,11 @@ function clearRef() {
   total_price.value = 0
 }
 
-/* http methods */
+
+///////////////////////////////////////////////////////////
+///////////* http methods *////////////////////////////////
+///////////////////////////////////////////////////////////
+
 async function addOrder() {
   const url = `${API_URL}/add`
   try {

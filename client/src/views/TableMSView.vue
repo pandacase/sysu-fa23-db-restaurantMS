@@ -20,7 +20,11 @@ const customer_num = ref(0)
 /* refresh event */
 const reload = ref(false)
 
-/* row options */
+
+///////////////////////////////////////////////////////////
+///////////* Row options */////////////////////////////////
+///////////////////////////////////////////////////////////
+
 const id = ref(null)
 function optionEdit(entry) {
   showModal.value = true
@@ -48,13 +52,17 @@ function handleSubmit() {
   }
 }
 
-/* utils */
+
+///////////////////////////////////////////////////////////
+///////////* Utils *///////////////////////////////////////
+///////////////////////////////////////////////////////////
+
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 const emit = defineEmits()
-const API_URL = `http://66.42.114.101:5000${route.path}`
+const API_URL = `http://127.0.0.1:5000${route.path}`
 
 function clearRef() {
   id.value = null
@@ -63,7 +71,11 @@ function clearRef() {
   customer_num.value = 0
 }
 
-/* http methods */
+
+///////////////////////////////////////////////////////////
+///////////* Http methods *////////////////////////////////
+///////////////////////////////////////////////////////////
+
 async function addTable() {
   const url = `${API_URL}/add`
   try {
