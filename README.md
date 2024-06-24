@@ -1,17 +1,11 @@
-## Env info
+# server
 
-package | version
---- | ---
-`node.js` | `v18.18.2`
-`npm ` | `v9.8.1`
+## Project setup
+```
+npm install
+```
 
-### FrontEnd
-
-framwork | version
---- | ---
-`vite` | `v4.5.0`
-`vue ` | `v3.3.9`
-
-### BackEnd
-
-`express.js` + `mysql`
+### Compiles and run
+```
+npm start
+```

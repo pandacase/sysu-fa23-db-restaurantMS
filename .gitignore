@@ -1,6 +1,1 @@
-/client/dist
-/client/node_modules
-
-/client.backup
-
-/server/node_modules
+/node_modules
