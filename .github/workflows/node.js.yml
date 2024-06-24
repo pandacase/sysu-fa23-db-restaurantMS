@@ -58,6 +58,7 @@ jobs:
         script: |
           whoami
           ls -a
+          mkdir test
 
     - name: copy file via ssh password
       uses: appleboy/scp-action@v0.1.7
