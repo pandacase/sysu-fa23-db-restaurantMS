@@ -35,7 +35,7 @@ jobs:
     - name: Install SSH Key
       uses: webfactory/ssh-agent@v0.5.0
       with:
-        ssh-private-key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{ secrets.VPS_USERNAME }}
 
     - name: Deploy to Apache
       env:
