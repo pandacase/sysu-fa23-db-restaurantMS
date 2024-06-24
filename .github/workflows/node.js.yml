@@ -43,7 +43,7 @@ jobs:
         VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
         VPS_IP_ADDRESS: ${{ secrets.VPS_IP_ADDRESS }}
       run: |
-        ssh $VPS_USERNAME@$VPS_IP_ADDRESS "mkdir test"
+        ssh $VPS_USERNAME@$VPS_IP_ADDRESS "mkdir tests"
     # ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
     # scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
 
