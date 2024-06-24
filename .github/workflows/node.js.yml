@@ -32,15 +32,26 @@ jobs:
     # - name: Test client
     #   run: npm test
 
-    - name: Install SSH Key
-      uses: webfactory/ssh-agent@v0.5.0
-      with:
-        ssh-private-key: ${{ secrets.VPS_USERNAME }}
+    # - name: Install SSH Key
+    #   uses: webfactory/ssh-agent@v0.5.0
+    #   with:
+    #     ssh-private-key: ${{ secrets.VPS_USERNAME }}
+
+    # - name: Deploy to Apache
+    #   env:
+    #     VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+    #     VPS_IP_ADDRESS: ${{ secrets.VPS_IP_ADDRESS }}
+    #   run: |
+    #     ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
+    #     scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
 
     - name: Deploy to Apache
-      env:
-        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-        VPS_IP_ADDRESS: ${{ secrets.VPS_IP_ADDRESS }}
-      run: |
-        ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
-        scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_IP_ADDRESS }}
+        username: ${{ secrets.VPS_USERNAME }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        port: 22
+        script: |
+          whoami
+          ls -al
