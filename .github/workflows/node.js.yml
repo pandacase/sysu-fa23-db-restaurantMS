@@ -40,6 +40,7 @@ jobs:
 
     - name: Deploy to Apache
       run: |
+        ssh-add - <<< "${{ secrets.VPS_SSH_PRIVATE_KEY }}"
         ssh root@45.77.18.47 "mkdir test"
     # ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
     # scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
