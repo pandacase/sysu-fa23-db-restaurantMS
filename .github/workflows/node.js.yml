@@ -11,6 +11,7 @@ on:
 
 jobs:
   build-client:
+    environment: VPS_ENVIR
     runs-on: ubuntu-latest
 
     steps:
@@ -48,9 +49,9 @@ jobs:
     - name: Deploy to Apache
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.VPS_ENVIR.VPS_IP_ADDRESS }}
-        username: ${{ secrets.VPS_ENVIR.VPS_USERNAME }}
-        password: ${{ secrets.VPS_ENVIR.VPS_PASSWORD }}
+        host: ${{ secrets.VPS_IP_ADDRESS }}
+        username: ${{ secrets.VPS_USERNAME }}
+        password: ${{ secrets.VPS_PASSWORD }}
         port: 22
         script: |
           whoami
