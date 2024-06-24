@@ -17,10 +17,14 @@ on:
 
 jobs:
   build-client:
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'client/')
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout client code
+      uses: actions/checkout@v4
+      with:
+        path: client
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -30,15 +34,12 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./client
 
     - name: Build client
       run: npm run build
-      working-directory: ./client
 
     - name: Test client
       run: npm test
-      working-directory: ./client
 
     - name: Deploy to Apache
       env:
@@ -49,10 +50,14 @@ jobs:
         echo "$VPS_PASSWORD" | sshpass scp -r ./client/dist/* $VPS_USERNAME@45.77.18.47:/var/www/html/
 
   build-server:
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'server/')
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout server code
+      uses: actions/checkout@v4
+      with:
+        path: server
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -62,15 +67,12 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      working-directory: ./server
 
     - name: Build server
       run: npm run build
-      working-directory: ./server
 
     - name: Test server
       run: npm test
-      working-directory: ./server
 
     - name: Deploy and start server with PM2
       env:
