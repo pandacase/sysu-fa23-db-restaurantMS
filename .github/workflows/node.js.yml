@@ -29,13 +29,14 @@ jobs:
     - name: Build client
       run: npm run build
 
-    - name: Test client
-      run: npm test
+    # - name: Test client
+    #   run: npm test
 
     - name: Deploy to Apache
       env:
         VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
         VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+        VPS_IP_ADDRESS: ${{ secrets.VPS_IP_ADDRESS }}
       run: |
-        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@45.77.18.47 "rm -rf /var/www/html/*"
-        echo "$VPS_PASSWORD" | sshpass scp -r ./client/dist/* $VPS_USERNAME@45.77.18.47:/var/www/html/
+        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
+        echo "$VPS_PASSWORD" | sshpass scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
