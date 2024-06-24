@@ -40,7 +40,7 @@ jobs:
 
     - name: Deploy to Apache
       run: |
-        ssh root@$45.77.18.47 "mkdir test"
+        ssh root@45.77.18.47 "mkdir test"
     # ssh $VPS_USERNAME@$VPS_IP_ADDRESS "rm -rf /var/www/html/*"
     # scp -r ./dist/* $VPS_USERNAME@$VPS_IP_ADDRESS:/var/www/html/
 
