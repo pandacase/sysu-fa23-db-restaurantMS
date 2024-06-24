@@ -1,17 +1,19 @@
-## Env info
+# client
 
-package | version
---- | ---
-`node.js` | `v18.18.2`
-`npm ` | `v9.8.1`
+## Project setup
+```
+npm install
+```
 
-### FrontEnd
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-framwork | version
---- | ---
-`vite` | `v4.5.0`
-`vue ` | `v3.3.9`
+### Compiles and minifies for production
+```
+npm run build
+```
 
-### BackEnd
-
-`express.js` + `mysql`
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
