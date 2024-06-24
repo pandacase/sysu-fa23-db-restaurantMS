@@ -5,15 +5,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
+    branches: [ "client" ]
   pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
+    branches: [ "client" ]
 
 jobs:
   build-client:
