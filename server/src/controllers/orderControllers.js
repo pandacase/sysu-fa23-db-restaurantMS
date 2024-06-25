@@ -6,7 +6,7 @@ exports.orderGet = (request, response) => {
   const db = dbService.getDbServiceInstance();
   const result = db.getAllDataFromOrders();
 
-  result
+  return result
   .then(data => response.json({data : data}))
   .catch(err => console.log(err));
 }
@@ -18,7 +18,7 @@ exports.orderAdd = (request, response) => {
   const db = dbService.getDbServiceInstance();
   const result = db.insertToOrders(item_list, table_id, customer_num);
   
-  result
+  return result
   .then(data => response.json({success : data}))
   .catch(err => console.log(err));
 }
@@ -28,7 +28,7 @@ exports.orderDelete = (request, response) => {
   const db = dbService.getDbServiceInstance();
   const result = db.deleteByIdFromOrders(id);
 
-  result
+  return result
   .then(data => response.json({success : data}))
   .catch(err => console.log(err));
 }
@@ -40,7 +40,7 @@ exports.orderUpdate = (request, response) => {
   const db = dbService.getDbServiceInstance();
   const result = db.updateOrder(id, item_list, table_id);
 
-  result
+  return result
   .then(data => response.json({success : data}))
   .catch(err => console.log(err));
 }

@@ -111,7 +111,7 @@ class dbService {
   ////////////////////////////////////////////////////////////////
   
   /**
-   * Select {order_id, time_added, table_id, item_list, total_price}
+   * Select {order_id, time_added, table_id, total_price, item_list}
    * list from orders (JOIN order_details, JOIN dishes).
    * 
    * @returns Data table.
