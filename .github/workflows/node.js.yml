@@ -17,37 +17,53 @@ jobs:
     steps:
     - name: Checkout client code
       uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    # - name: Login to DockerHub
+    #   uses:
+    #     docker/login-action@v1
+    #   with:
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+      
+    - name: Build Docker Image
+      run: |
+        docker build -t rest-client:latest .
+    
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-        cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: '18.x'
+    #     cache: 'npm'
 
-    - name: Build client
-      run: npm run build
+    # - name: Install dependencies
+    #   run: npm ci
+
+    # - name: Build client
+    #   run: npm run build
 
     # - name: Test client
     #   run: npm test
 
-    - name: Copy Builed File to Server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.VPS_IP_ADDRESS }}
-        username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-        source: "./dist/*"
-        target: /var/www/
+    # - name: Copy Builed File to Server
+    #   uses: appleboy/scp-action@v0.1.7
+    #   with:
+    #     host: ${{ secrets.VPS_IP_ADDRESS }}
+    #     username: ${{ secrets.VPS_USERNAME }}
+    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+    #     source: "./dist/*"
+    #     target: /var/www/
 
-    - name: Deploy on Apache
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.VPS_IP_ADDRESS }}
-        username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-        script: |
-          rm -rf /var/www/html/*
-          mv /var/www/dist/* /var/www/html/
+    # - name: Deploy on Apache
+    #   uses: appleboy/ssh-action@v1.0.3
+    #   with:
+    #     host: ${{ secrets.VPS_IP_ADDRESS }}
+    #     username: ${{ secrets.VPS_USERNAME }}
+    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+    #     script: |
+    #       rm -rf /var/www/html/*
+    #       mv /var/www/dist/* /var/www/html/
