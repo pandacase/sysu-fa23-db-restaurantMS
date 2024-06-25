@@ -240,7 +240,9 @@ class dbService {
     } catch (error) {
       console.error(
         "Error during dbService::insertToOrders:", error);
-      await connection.rollback();
+        if (connection) {
+          await connection.rollback();
+        }
       throw error;
     } finally {
       if (connection) {
@@ -271,7 +273,9 @@ class dbService {
     } catch (err) {
       console.error(
         "Error during dbService::deleteByIdFromOrders:", err);
-      connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw err;
     } finally {
       if (connection) {
@@ -314,7 +318,7 @@ class dbService {
         const dishInfo = dishes.find(d => d.name === dish.name);
         const subTotal = dish.quantity * dishInfo.price;
         await inter.insertOrderDetails(
-          orderId, dishInfo.id, dish.quantity, subTotal);
+          id, dishInfo.id, dish.quantity, subTotal);
       }
   
       await connection.commit();
@@ -322,7 +326,9 @@ class dbService {
     } catch (err) {
       console.error(
         "Error during dbService::updateOrder:", err);
-      connection.rollback();
+      if (connection) {
+        await connection.rollback();
+      }
       throw err;
     } finally {
       if (connection) {
