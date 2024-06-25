@@ -33,7 +33,7 @@ jobs:
 
 
   deploy-on-server:
-    nees: build-client-app
+    needs: build-client-app
     environment: VPS_ENVIR
     runs-on: ubuntu-latest
 
@@ -59,7 +59,7 @@ jobs:
 
 
   push-to-dockerhub:
-    nees: build-client-app
+    needs: build-client-app
     environment: VPS_ENVIR
     runs-on: ubuntu-latest
 
