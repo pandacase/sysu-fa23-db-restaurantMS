@@ -11,19 +11,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 
-
-// get
-app.get('/get', (request, response) => {
+const orderGet = (request, response) => {
     const db = dbService.getDbServiceInstance();
     const result = db.getAllDataFromOrders();
 
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
-})
+}
 
-// add
-app.post('/add', (request, response) => {
+const orderAdd = (request, response) => {
     const { item_list } = request.body;
     const { total_price } = request.body;
     const db = dbService.getDbServiceInstance();
@@ -32,10 +29,9 @@ app.post('/add', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-});
+}
 
-// delete
-app.delete('/delete/:id', (request, response) => {
+const orderDelete = (request, response) => {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
     const result = db.deleteByIdFromOrders(id);
@@ -43,10 +39,9 @@ app.delete('/delete/:id', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-})
+}
 
-// update
-app.patch('/update', (request, response) => {
+const orderUpdate = (request, response) => {
     const { id } = request.body;
     const { item_list } = request.body;
     const { total_price } = request.body;
@@ -56,6 +51,20 @@ app.patch('/update', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-})
+}
+
+
+// get
+app.get('/get', orderGet)
+
+// add
+app.post('/add', orderAdd);
+
+// delete
+app.delete('/delete/:id', orderDelete)
+
+// update
+app.patch('/update', orderUpdate)
+
 
 module.exports = app;

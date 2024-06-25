@@ -11,18 +11,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 
-// get
-app.get('/get', (request, response) => {
+const menuGet = (request, response) => {
     const db = dbService.getDbServiceInstance();
     const result = db.getAllDataFromDishes();
 
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
-})
+}
 
-// add
-app.post('/add', (request, response) => {
+const menuAdd = (request, response) => {
     const { name } = request.body;
     const { price } = request.body;
     const { description } = request.body;
@@ -33,10 +31,9 @@ app.post('/add', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-});
+}
 
-// delete
-app.delete('/delete/:id', (request, response) => {
+const menuDelete = (request, response) => {
     const { id } = request.params;
     const db = dbService.getDbServiceInstance();
     const result = db.deleteByIdFromDishes(id);
@@ -44,10 +41,9 @@ app.delete('/delete/:id', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-})
+}
 
-// update
-app.patch('/update', (request, response) => {
+const menuUpdate = (request, response) => {
     const { id } = request.body;
     const { name } = request.body;
     const { price } = request.body;
@@ -59,7 +55,19 @@ app.patch('/update', (request, response) => {
     result
     .then(data => response.json({success : data}))
     .catch(err => console.log(err));
-})
+}
+
+// get
+app.get('/get', menuGet);
+
+// add
+app.post('/add', menuAdd);
+
+// delete
+app.delete('/delete/:id', menuDelete)
+
+// update
+app.patch('/update', menuUpdate)
 
 
 module.exports = app;
