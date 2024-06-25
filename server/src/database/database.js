@@ -375,7 +375,7 @@ class dbService {
       connection = await pool.getConnection();
       const query = `
         INSERT INTO tables (type, customer_num) 
-        VALUES(?, ?, ?);`;
+        VALUES(?, ?);`;
       const [result] 
         = await connection.query(query, [type, customer_num]);
       return result.affectedRows === 1;
