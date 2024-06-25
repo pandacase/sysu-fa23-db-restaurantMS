@@ -18,6 +18,41 @@ jobs:
     - name: Checkout client code
       uses: actions/checkout@v4
     
+    # Deploy client app on remote server
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build and test client 
+      run: npm run build
+      run: npm test
+
+    - name: Copy Builed File to Server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_IP_ADDRESS }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        source: "./dist/*"
+        target: /var/www/
+
+    - name: Deploy on Apache
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_IP_ADDRESS }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        script: |
+          rm -rf /var/www/html/*
+          mv /var/www/dist/* /var/www/html/
+    
+    # Build and Push Docker images
+    # Images can be pulled from DockerHub on remote servers
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     
@@ -27,10 +62,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-      
-    - name: Build Docker image
-      run: |
-        docker build -t rest-client:latest .
     
     - name: Build and Push Docker image
       uses: docker/build-push-action@v2
@@ -38,53 +69,3 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/rest-client:latest
-    
-    - name: SSH into server and Pull & Run
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.VPS_IP_ADDRESS }}
-        username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-        script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/rest-client:latest
-          docker stop rest-client || true
-          docker rm rest-client || true
-          docker run -it -p 80:8080 --rm --name rest-client ${{ secrets.DOCKER_USERNAME }}/rest-client:latest
-
-
-    # # # # # # # # # # # # # # # # # # # # # # # #
-    # # # Below steps deploy app on server without Docker.
-
-    # - name: Set up Node.js
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: '18.x'
-    #     cache: 'npm'
-
-    # - name: Install dependencies
-    #   run: npm ci
-
-    # - name: Build client
-    #   run: npm run build
-
-    # - name: Test client
-    #   run: npm test
-
-    # - name: Copy Builed File to Server
-    #   uses: appleboy/scp-action@v0.1.7
-    #   with:
-    #     host: ${{ secrets.VPS_IP_ADDRESS }}
-    #     username: ${{ secrets.VPS_USERNAME }}
-    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-    #     source: "./dist/*"
-    #     target: /var/www/
-
-    # - name: Deploy on Apache
-    #   uses: appleboy/ssh-action@v1.0.3
-    #   with:
-    #     host: ${{ secrets.VPS_IP_ADDRESS }}
-    #     username: ${{ secrets.VPS_USERNAME }}
-    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-    #     script: |
-    #       rm -rf /var/www/html/*
-    #       mv /var/www/dist/* /var/www/html/
