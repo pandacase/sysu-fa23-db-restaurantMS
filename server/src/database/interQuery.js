@@ -8,9 +8,11 @@ class interQuery {
   /**
    * Retrieve item list for a specific order from the database.
    * 
-   * @param {number} orderId - The ID of the order to retrieve the item list for.
+   * @param {number} orderId - The ID of the order to retrieve the 
+   * item list for.
    * 
-   * @returns {Array} - An array containing the items and their quantities for the specified order.
+   * @returns {Array} - An array containing the items and their 
+   * quantities for the specified order.
    */
   async getItemListForOrder(orderId) {
     const itemList = await mysqlQuery(`
@@ -42,7 +44,9 @@ class interQuery {
    * @throws {Error} - If the insertion into the "orders" table fails.
    */
   async insertOrder(table_id) {
-    const query = "INSERT INTO orders (time_added, table_id) VALUES (CURRENT_TIMESTAMP, ?);";
+    const query = `"\`
+      INSERT INTO orders (time_added, table_id) 
+      VALUES (CURRENT_TIMESTAMP, ?);`;
     const [result] = await this.connection.query(query, [table_id]);
     if (result.affectedRows !== 1) {
       throw new Error("Insert into [ orders ] failed.");
@@ -54,31 +58,40 @@ class interQuery {
    * Update the number of customers for a specific table in the database.
    * 
    * @param {number} table_id - The ID of the table to update.
-   * @param {number} customer_num - The new number of customers for the table.
+   * @param {number} customer_num - The new number of customers 
+   * for the table.
    * 
-   * @throws {Error} - If the update operation on the "tables" table fails.
+   * @throws {Error} - If the update operation on the "tables" 
+   * table fails.
    */
   async updateTable(table_id, customer_num) {
     const query = "UPDATE tables SET customer_num = ? WHERE id = ?;";
-    const [result] = await this.connection.query(query, [customer_num, table_id]);
+    const [result] = await this.connection.query(
+      query, [customer_num, table_id]);
     if (result.affectedRows !== 1) {
       throw new Error("Update [ tables ] failed.");
     }
   }
 
   /**
-   * Insert order details into the database for a specific order, dish, quantity, and sub-total.
+   * Insert order details into the database for a specific order, dish, 
+   * quantity, and sub-total.
    * 
    * @param {number} order_id - The ID of the order for the details.
    * @param {number} dish_id - The ID of the dish for the order.
    * @param {number} quantity - The quantity of the dish in the order.
-   * @param {number} sub_total - The sub-total for the dish in the order.
+   * @param {number} sub_total - The sub-total for the dish in 
+   * the order.
    * 
-   * @throws {Error} - If the insertion into the "order_details" table fails.
+   * @throws {Error} - If the insertion into the "order_details" 
+   * table fails.
    */
   async insertOrderDetails(order_id, dish_id, quantity, sub_total) {
-    const query = "INSERT INTO order_details (order_id, dish_id, quantity, sub_total) VALUES (?, ?, ?, ?);";
-    const [result] = await this.connection.query(query, [order_id, dish_id, quantity, sub_total]);
+    const query = `
+      INSERT INTO order_details (order_id, dish_id, quantity, sub_total)
+      VALUES (?, ?, ?, ?);`;
+    const [result] = await this.connection.query(
+      query, [order_id, dish_id, quantity, sub_total]);
     if (result.affectedRows !== 1) {
       throw new Error("Insert into [ order_details ] failed.");
     }
@@ -87,9 +100,12 @@ class interQuery {
   /**
    * Delete order details from the database for a specific order.
    * 
-   * @param {number} order_id - The ID of the order for which the details are to be deleted.
+   * @param {number} order_id - The ID of the order for which 
+   * the details 
+   * are to be deleted.
    * 
-   * @throws {Error} - If the deletion from the "order_details" table fails.
+   * @throws {Error} - If the deletion from the "order_details" 
+   * table fails.
    */
   async deleteOrderDetails(order_id) {
     const query = "DELETE FROM order_details WHERE order_id = ?;"
@@ -120,11 +136,13 @@ class interQuery {
    * @param {number} order_id - The ID of the order to be updated.
    * @param {number} table_id - The new table ID for the order.
    * 
-   * @throws {Error} - If the update operation on the "orders" table fails.
+   * @throws {Error} - If the update operation on the "orders" 
+   * table fails.
    */
   async updateOrder(order_id, table_id) {
     const query = "UPDATE orders SET table_id = ? WHERE id = ?;";
-    const [result] = await this.connection.query(query, [table_id, order_id]);
+    const [result] = await this.connection.query(
+      query, [table_id, order_id]);
     if (result.affectedRows !== 1) {
       throw new Error("Update [ order ] failed.");
     }

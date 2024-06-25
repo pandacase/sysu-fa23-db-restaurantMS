@@ -19,7 +19,8 @@ exports.orderGet = (request, response) => {
 /**
  * Handle the request to add a new order and send the response.
  * 
- * @param {object} request - The HTTP request object containing the new order details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * new order details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.orderAdd = (request, response) => {
@@ -35,7 +36,8 @@ exports.orderAdd = (request, response) => {
 /**
  * Handle the request to delete an order and send the response.
  * 
- * @param {object} request - The HTTP request object containing the ID of the order to be deleted.
+ * @param {object} request - The HTTP request object containing the 
+ * ID of the order to be deleted.
  * @param {object} response - The HTTP response object.
  */
 exports.orderDelete = (request, response) => {
@@ -51,7 +53,8 @@ exports.orderDelete = (request, response) => {
 /**
  * Handle the request to update an order and send the response.
  * 
- * @param {object} request - The HTTP request object containing the updated order details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * updated order details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.orderUpdate = (request, response) => {

@@ -18,7 +18,8 @@ exports.menuGet = (request, response) => {
 /**
  * Handle the request to add a new dish and send the response.
  * 
- * @param {object} request - The HTTP request object containing the new dish details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * new dish details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.menuAdd = (request, response) => {
@@ -34,7 +35,8 @@ exports.menuAdd = (request, response) => {
 /**
  * Handle the request to delete a dish and send the response.
  * 
- * @param {object} request - The HTTP request object containing the ID of the dish to be deleted.
+ * @param {object} request - The HTTP request object containing the 
+ * ID of the dish to be deleted.
  * @param {object} response - The HTTP response object.
  */
 exports.menuDelete = (request, response) => {
@@ -50,7 +52,8 @@ exports.menuDelete = (request, response) => {
 /**
  * Handle the request to update a dish and send the response.
  * 
- * @param {object} request - The HTTP request object containing the updated dish details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * updated dish details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.menuUpdate = (request, response) => {

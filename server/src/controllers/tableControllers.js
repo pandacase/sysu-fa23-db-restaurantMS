@@ -20,7 +20,8 @@ exports.tableGet = (request, response) => {
 /**
  * Handle the request to add a new table and send the response.
  * 
- * @param {object} request - The HTTP request object containing the new table details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * new table details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.tableAdd = (request, response) => {
@@ -36,7 +37,8 @@ exports.tableAdd = (request, response) => {
 /**
  * Handle the request to delete a table and send the response.
  * 
- * @param {object} request - The HTTP request object containing the ID of the table to be deleted.
+ * @param {object} request - The HTTP request object containing the 
+ * ID of the table to be deleted.
  * @param {object} response - The HTTP response object.
  */
 exports.tableDelete = (request, response) => {
@@ -52,7 +54,8 @@ exports.tableDelete = (request, response) => {
 /**
  * Handle the request to update a table and send the response.
  * 
- * @param {object} request - The HTTP request object containing the updated table details in the body.
+ * @param {object} request - The HTTP request object containing the 
+ * updated table details in the body.
  * @param {object} response - The HTTP response object.
  */
 exports.tableUpdate = (request, response) => {
@@ -68,7 +71,8 @@ exports.tableUpdate = (request, response) => {
 /**
  * Handle the request to clear a table and send the response.
  * 
- * @param {object} request - The HTTP request object containing the ID of the table to be cleared.
+ * @param {object} request - The HTTP request object containing the 
+ * ID of the table to be cleared.
  * @param {object} response - The HTTP response object.
  */
 exports.tableClear = (request, response) => {
