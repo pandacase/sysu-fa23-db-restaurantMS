@@ -25,9 +25,9 @@ exports.tableGet = (request, response) => {
  * @param {object} response - The HTTP response object.
  */
 exports.tableAdd = (request, response) => {
-  const { table_id, type, customer_num } = request.body;
+  const { type, customer_num } = request.body;
   const db = dbService.getDbServiceInstance();
-  const result = db.insertToTables(table_id, type, customer_num);
+  const result = db.insertToTables(type, customer_num);
   
   return result
     .then(data => response.json({ success: data }))
@@ -59,9 +59,9 @@ exports.tableDelete = (request, response) => {
  * @param {object} response - The HTTP response object.
  */
 exports.tableUpdate = (request, response) => {
-  const { id, table_id, type, customer_num } = request.body;
+  const { id, type, customer_num } = request.body;
   const db = dbService.getDbServiceInstance();
-  const result = db.updateTable(id, table_id, type, customer_num);
+  const result = db.updateTable(id, type, customer_num);
 
   return result
     .then(data => response.json({ success: data }))

@@ -140,7 +140,7 @@ class dbService {
       const [result] = await connection.query(
         query, [name, price, description, id]);
       return result.affectedRows === 1;
-    } catch {
+    } catch (err) {
       console.error(
         "Error during dbService::updateDish:", err);
       throw err;
@@ -187,7 +187,7 @@ class dbService {
       })));
 
       return formattedResult;
-    } catch {
+    } catch (err) {
       console.error(
         "Error during dbService::getAllDataFromOrders:", err);
       throw err;
@@ -348,7 +348,7 @@ class dbService {
       const query = "SELECT * FROM tables;";
       const [rows] = await connection.query(query);
       return rows;
-    } catch {
+    } catch (err) {
       console.error(
         "Error during dbService::getAllDataFromTables:", err);
       throw err;
@@ -379,7 +379,7 @@ class dbService {
       const [result] 
         = await connection.query(query, [type, customer_num]);
       return result.affectedRows === 1;
-    } catch {
+    } catch (err) {
       console.error(
         "Error during dbService::insertToTables:", err);
       throw err;
