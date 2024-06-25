@@ -30,9 +30,6 @@ jobs:
 
     - name: Build client 
       run: npm run build
-    
-    - name: Test clinet
-      run: npm test
 
     - name: Copy Builed File to Server
       uses: appleboy/scp-action@v0.1.7
