@@ -18,16 +18,6 @@ jobs:
     - name: Checkout server code
       uses: actions/checkout@v4
 
-    # Deploy server app on remote server
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
     - name: Copy files to server
       uses: appleboy/scp-action@v0.1.7
       with:
@@ -50,7 +40,10 @@ jobs:
           rm -rf /var/www/server/*
           mv /root/server/* /var/www/server/
           cd /var/www/server
+          bash
+          npm install
           pm2 start src/app.js
+          pm2 log
 
   push-to-dockerhub:
     environment: VPS_ENVIR
