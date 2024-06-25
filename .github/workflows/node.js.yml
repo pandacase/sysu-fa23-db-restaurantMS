@@ -46,5 +46,5 @@ jobs:
           pm2 stop app
           pm2 delete app
           rm -rf /var/www/server/*
-          cp /root/server/* /var/www/server
+          cp -r /root/server/* /var/www/server
           pm2 start /var/www/server/src/app.js
