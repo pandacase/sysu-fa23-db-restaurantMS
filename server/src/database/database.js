@@ -226,7 +226,7 @@ class dbService {
   
       await connection.commit();
       return true;
-    } catch {
+    } catch (err) {
       console.error("Error during dbService::updateOrder:", err);
       connection.rollback();
       throw err;
