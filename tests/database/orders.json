@@ -1,0 +1,192 @@
+{
+  "Insert": [
+    {
+      "name": "case1",
+      "input": {
+        "item_list": [
+          {
+            "name": "Taro ice-cream",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "input": {
+        "item_list": [
+          {
+            "name": "Minty Fruit Tea",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "input": {
+        "item_list": [
+          {
+            "name": "Taro ice-cream",
+            "quantity": "3"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "input": {
+        "item_list": [
+          {
+            "name": "Minty Fruit Tea",
+            "quantity": "8"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "2"
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "input": {
+        "item_list": [
+          {
+            "name": "Minty Fruit Tea",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "3"
+      },
+      "expect": true
+    }
+  ],
+  "Update": [
+    {
+      "name": "case1",
+      "input": {
+        "id": "1",
+        "item_list": [
+          {
+            "name": "Snow on the Hearth",
+            "quantity": "8"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "input": {
+        "id": "2",
+        "item_list": [
+          {
+            "name": "Taro ice-cream",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "5",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "input": {
+        "id": "3",
+        "item_list": [
+          {
+            "name": "Taro ice-cream",
+            "quantity": "10"
+          },
+          {
+            "name": "Snow on the Hearth",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "20"
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "input": {
+        "id": "3",
+        "item_list": [
+          {
+            "name": "Taro ice-cream",
+            "quantity": "10"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "input": {
+        "id": "5",
+        "item_list": [
+          {
+            "name": "Snow on the Hearth",
+            "quantity": "8"
+          }
+        ],
+        "table_id": "1",
+        "customer_num": "6"
+      },
+      "expect": true
+    }
+  ],
+  "Del": [
+    {
+      "name": "case1",
+      "input": {
+        "id": "1"
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "input": {
+        "id": "2"
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "input": {
+        "id": "3"
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "input": {
+        "id": "4"
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "input": {
+        "id": "5"
+      },
+      "expect": true
+    }
+  ]
+}

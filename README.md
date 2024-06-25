@@ -9,3 +9,8 @@ npm install
 ```
 npm start
 ```
+
+### Project test
+```
+npm test
+```

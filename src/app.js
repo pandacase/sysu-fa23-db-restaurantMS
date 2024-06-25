@@ -20,3 +20,5 @@ app.use('/table', table);
 
 // run the app
 app.listen(process.env.APP_PORT, () => console.log('App is running'));
+
+module.exports = app
