@@ -10,7 +10,7 @@ on:
     branches: [ "client" ]
 
 jobs:
-  build-client:
+  build-client-app:
     environment: VPS_ENVIR
     runs-on: ubuntu-latest
 
@@ -31,6 +31,13 @@ jobs:
     - name: Build client 
       run: npm run build
 
+
+  deploy-on-server:
+    nees: build-client-app
+    environment: VPS_ENVIR
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Copy Builed File to Server
       uses: appleboy/scp-action@v0.1.7
       with:
@@ -49,7 +56,14 @@ jobs:
         script: |
           rm -rf /var/www/html/*
           mv /var/www/dist/* /var/www/html/
-    
+
+
+  push-to-dockerhub:
+    nees: build-client-app
+    environment: VPS_ENVIR
+    runs-on: ubuntu-latest
+
+    steps:
     # Build and Push Docker images
     # Images can be pulled from DockerHub on remote servers
     - name: Set up Docker Buildx
