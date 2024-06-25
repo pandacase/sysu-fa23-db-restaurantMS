@@ -6,7 +6,7 @@ let instance = null;
 dotenv.config();
 
 
-// 创建连接池
+// Create a connection pool
 const pool = mysql.createPool({
   host: process.env.HOST,
   user: process.env.DB_USERNAME,
@@ -14,13 +14,13 @@ const pool = mysql.createPool({
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
   waitForConnections: true,
-  connectionLimit: 100, // 可以根据需要调整连接数
+  connectionLimit: 100, // max connection num
   queueLimit: 0
 });
 
 console.log('Connection pool created');
 
-// 连接池不需要关闭每个连接，只在应用关闭时关闭池
+// Only close the pool when the APP is shut down.
 process.on('SIGINT', async () => {
   await pool.end();
   console.log('Pool closed');
@@ -37,6 +37,12 @@ class dbService {
   ////////////////////////////////////////////////////////////////
   //// For /menu 
   ////////////////////////////////////////////////////////////////
+  
+  /**
+   * Retrieve all dishes data from the database.
+   * 
+   * @returns {Array} - An array containing all the dishes data.
+   */
   async getAllDataFromDishes() {
     let connection;
     try {
@@ -49,11 +55,20 @@ class dbService {
       throw err;
     } finally {
       if (connection) {
-        connection.release(); // 无论成功或失败，都释放连接回池中
+        connection.release();
       }
     }
   }
 
+  /**
+   * Insert a new dish into the database with the provided details.
+   * 
+   * @param {string} name - The name of the new dish.
+   * @param {number} price - The price of the new dish.
+   * @param {string} description - The description of the new dish.
+   * 
+   * @returns {boolean} - True if the insertion was successful, false otherwise.
+   */
   async insertToDishes(name, price, description) {
     let connection;
     try {
@@ -71,7 +86,13 @@ class dbService {
     }
   }
   
-
+  /**
+   * Delete a dish from the database by its ID.
+   * 
+   * @param {number} id - The ID of the dish to be deleted.
+   * 
+   * @returns {boolean} - True if the deletion was successful, false otherwise.
+   */
   async deleteByIdFromDishes(id) {
     let connection;
     try {
@@ -89,6 +110,16 @@ class dbService {
     }
   }
 
+  /**
+   * Update the details of a dish in the database by its ID.
+   * 
+   * @param {number} id - The ID of the dish to be updated.
+   * @param {string} name - The updated name of the dish.
+   * @param {number} price - The updated price of the dish.
+   * @param {string} description - The updated description of the dish.
+   * 
+   * @returns {boolean} - True if the update was successful, false otherwise.
+   */
   async updateDish(id, name, price, description) {
     let connection;
     try {
@@ -111,10 +142,10 @@ class dbService {
   ////////////////////////////////////////////////////////////////
   
   /**
-   * Select {order_id, time_added, table_id, total_price, item_list}
-   * list from orders (JOIN order_details, JOIN dishes).
+   * Select list from orders (JOIN order_details, JOIN dishes).
    * 
-   * @returns Data table.
+   * @returns {Object[]} - An array of table data, each object is:
+   * {order_id, time_added, table_id, total_price, item_list}
    */
   async getAllDataFromOrders() {
     let connection;
@@ -160,7 +191,7 @@ class dbService {
    * @param {number} table_id - The table number to which the order belongs
    * @param {number} customer_num - The number of customers to which the order belongs
    * 
-   * @returns True if the whole Transaction is commited.
+   * @returns {boolean} - True if the whole Transaction is commited.
    */
   async insertToOrders(item_list, table_id, customer_num) {
     let connection;
@@ -202,7 +233,7 @@ class dbService {
    * 
    * @param {number} id - orders primary key: id
    * 
-   * @returns True if the whole Transaction is commited.
+   * @returns {boolean} - True if the whole Transaction is commited.
    */
   async deleteByIdFromOrders(id) {
     let connection;
@@ -236,7 +267,7 @@ class dbService {
    * @param {number} item_list[].quantity - A dish's quantity
    * @param {number} table_id - A table's id
    * 
-   * @returns True if the whole Transaction is commited.
+   * @returns {boolean} - True if the whole Transaction is commited.
    */
   async updateOrder(id, item_list, table_id) {
     let connection;
@@ -279,7 +310,11 @@ class dbService {
   //// For /tables 
   ////////////////////////////////////////////////////////////////
 
-  // select
+  /**
+   * Retrieve all data from the tables in the database.
+   * 
+   * @returns {Object[]} - An array of table data, each object representing a table.
+   */
   async getAllDataFromTables() {
     let connection;
     try {
@@ -297,7 +332,14 @@ class dbService {
     }
   }
 
-  // insert
+  /**
+   * Insert a new table into the database.
+   * 
+   * @param {string} type - The type of the table.
+   * @param {number} customer_num - The number of customers the table can accommodate.
+   * 
+   * @returns {boolean} - True if the insertion was successful, false otherwise.
+   */
   async insertToTables(type, customer_num) {
     let connection;
     try {
@@ -315,7 +357,13 @@ class dbService {
     }
   }
 
-  // delete
+  /**
+   * Delete a table from the database by its ID.
+   * 
+   * @param {number} id - The ID of the table to be deleted.
+   * 
+   * @returns {boolean} - True if the deletion was successful, false otherwise.
+   */
   async deleteByIdFromTables(id) {
     let connection;
     try {
@@ -333,7 +381,16 @@ class dbService {
     }
   }
 
-  // update
+  /**
+   * Update the type and customer number of a table in the database by its ID.
+   * 
+   * @param {number} id - The ID of the table to be updated.
+   * @param {string} type - The updated type of the table.
+   * @param {number} customer_num - The updated number of customers the table 
+   * can accommodate.
+   * 
+   * @returns {boolean} - True if the update was successful, false otherwise.
+   */
   async updateTable(id, type, customer_num) {
     let connection;
     try {
@@ -341,7 +398,7 @@ class dbService {
       const query = "UPDATE tables SET type = ?, customer_num = ? WHERE id = ?;";
       const [result] = await connection.query(query, [type, customer_num, id]);
       return result.affectedRows === 1;
-    } catch {
+    } catch (err) {
       console.error("Error during dbService::updateTable:", err);
       throw err;
     } finally {
@@ -351,7 +408,13 @@ class dbService {
     }
   }
 
-  // unuse
+  /**
+   * Clear the table by setting the number of customers to 0, identified by its ID.
+   * 
+   * @param {number} id - The ID of the table to be cleared.
+   * 
+   * @returns {boolean} - True if the table was successfully cleared, false otherwise.
+   */
   async clearTableById(id) {
     let connection;
     try {
@@ -359,7 +422,7 @@ class dbService {
       const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
       const [result] = await connection.query(query, [id]);
       return result.affectedRows === 1;
-    } catch {
+    } catch (err) {
       console.error("Error during dbService::clearTableById:", err);
       throw err;
     } finally {
