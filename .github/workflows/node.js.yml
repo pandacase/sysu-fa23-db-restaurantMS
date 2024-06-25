@@ -33,7 +33,6 @@ jobs:
         host: ${{ secrets.VPS_IP_ADDRESS }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-        port: ${{ secrets.VPS_SERVER_PORT }}
         source: "./*"
         target: /var/www/
 
