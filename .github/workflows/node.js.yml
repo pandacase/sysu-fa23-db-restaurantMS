@@ -28,8 +28,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Build and test client 
+    - name: Build client 
       run: npm run build
+    
+    - name: Test clinet
       run: npm test
 
     - name: Copy Builed File to Server
