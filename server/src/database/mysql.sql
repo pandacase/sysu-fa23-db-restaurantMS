@@ -6,10 +6,18 @@ use restaurant;
 
 create table dishes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(31) NOT NULL,
+    name VARCHAR(31) UNIQUE NOT NULL,
     price FLOAT NOT NULL,
     description VARCHAR(255),
     icon BLOB
+);
+
+create table tables (
+    -- id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY,
+    type VARCHAR(15) NOT NULL,
+    customer_num INT,
+    CONSTRAINT ct_num CHECK (customer_num >= 0)
 );
 
 create table orders (
@@ -17,14 +25,6 @@ create table orders (
     time_added DATETIME NOT NULL,
     table_id int NOT NULL,
     FOREIGN KEY (table_id) REFERENCES tables(id)
-);
-
-create table tables (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    table_id INT NOT NULL,
-    type VARCHAR(15) NOT NULL,
-    customer_num INT,
-    CONSTRAINT ct_num CHECK (customer_num >= 0)
 );
 
 create table order_details (
@@ -38,24 +38,24 @@ create table order_details (
 );
 
 -- tables init
-insert into tables (table_id, type, customer_num) values (1, "large(8)", 0);
-insert into tables (table_id, type, customer_num) values (2, "large(8)", 0);
-insert into tables (table_id, type, customer_num) values (3, "large(8)", 0);
-insert into tables (table_id, type, customer_num) values (4, "large(8)", 0);
-insert into tables (table_id, type, customer_num) values (5, "middle(4)", 0);
-insert into tables (table_id, type, customer_num) values (6, "middle(4)", 0);
-insert into tables (table_id, type, customer_num) values (7, "middle(4)", 0);
-insert into tables (table_id, type, customer_num) values (8, "middle(4)", 0);
-insert into tables (table_id, type, customer_num) values (9, "small(2)", 0);
-insert into tables (table_id, type, customer_num) values (10, "small(2)", 0);
-insert into tables (table_id, type, customer_num) values (11, "small(2)", 0);
-insert into tables (table_id, type, customer_num) values (12, "small(2)", 0);
+insert into tables (id, type, customer_num) values (1, "large(8)", 0);
+insert into tables (id, type, customer_num) values (2, "large(8)", 0);
+insert into tables (id, type, customer_num) values (3, "large(8)", 0);
+insert into tables (id, type, customer_num) values (4, "large(8)", 0);
+insert into tables (id, type, customer_num) values (5, "middle(4)", 0);
+insert into tables (id, type, customer_num) values (6, "middle(4)", 0);
+insert into tables (id, type, customer_num) values (7, "middle(4)", 0);
+insert into tables (id, type, customer_num) values (8, "middle(4)", 0);
+insert into tables (id, type, customer_num) values (9, "small(2)", 0);
+insert into tables (id, type, customer_num) values (10, "small(2)", 0);
+insert into tables (id, type, customer_num) values (11, "small(2)", 0);
+insert into tables (id, type, customer_num) values (12, "small(2)", 0);
 
 -- dishes init
 insert into dishes (name, price, description) values ("Taro ice-cream", 3.98, "Great dessert, liked by Asta.");
 insert into dishes (name, price, description) values ("Wine", 648, "Topaz recommends.");
-insert into dishes (name, price, description) values ("Minty Fruit Tea", 92.8, "Kamisato Ayaka's specialty.");
-insert into dishes (name, price, description) values ("Taro ice-cream", 13.8, "A cooling and refreshing drink.");
+insert into dishes (name, price, description) values ("Snow on the Hearth", 92.8, "Kamisato Ayaka's specialty.");
+insert into dishes (name, price, description) values ("Minty Fruit Tea", 13.8, "A cooling and refreshing drink.");
 insert into dishes (name, price, description) values ("Pile 'Em Up", 36.6, "A rich, meaty dish. A pile of meat and cheese.");
 
 -- orders init
@@ -63,7 +63,6 @@ insert into orders (time_added, table_id) values ("2024/6/24 10:56:30", 1);
 insert into orders (time_added, table_id) values ("2024/6/24 10:56:32", 2);
 insert into orders (time_added, table_id) values ("2024/6/24 10:56:33", 3);
 -- order_details init
--- 1. POST(2024/6/24 10:56:30")
 insert into order_details (order_id, dish_id, quantity, sub_total) values (1, 1, 2, 7.96);
 insert into order_details (order_id, dish_id, quantity, sub_total) values (1, 2, 1, 648);
 insert into order_details (order_id, dish_id, quantity, sub_total) values (2, 2, 1, 648);
