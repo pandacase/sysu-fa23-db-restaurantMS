@@ -155,7 +155,7 @@ class dbService {
   
       const dishNames = item_list.map(item => item.name);
       const [dishes] = await connection.query(
-        "SELECT id, price FROM dishes WHERE name IN (?)", [dishNames]);
+        "SELECT id, name, price FROM dishes WHERE name IN (?)", [dishNames]);
   
       for (let i = 0; i < item_list.length; i++) {
         const dish = item_list[i];
@@ -215,7 +215,7 @@ class dbService {
       // Step 2.2, add new item_list -> order_details
       const dishNames = item_list.map(item => item.name);
       const [dishes] = await connection.query(
-        "SELECT id, price FROM dishes WHERE name IN (?)", [dishNames]);
+        "SELECT id, name, price FROM dishes WHERE name IN (?)", [dishNames]);
   
       for (let i = 0; i < item_list.length; i++) {
         const dish = item_list[i];
