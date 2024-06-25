@@ -34,18 +34,17 @@ jobs:
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         source: "./*"
-        target: /var/www/
+        target: /root/server
 
-    # Test if we successfully upload the build files
-    - name: Print file path
+    - name: Start the new backend app
       uses: appleboy/ssh-action@v0.1.7
       with:
         host: ${{ secrets.VPS_IP_ADDRESS }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         script: |
-          whoami
-          ls -a
-      
-
-    # - name: Start the new backend
+          pm2 stop app
+          pm2 delete app
+          rm -rf /var/www/server/*
+          cp /root/server/* /var/www/server
+          pm2 start /var/www/server/src/app.js
