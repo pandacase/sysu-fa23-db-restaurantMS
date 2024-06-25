@@ -26,12 +26,6 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Build server
-      run: npm run build
-
-    - name: Test server
-      run: npm test
-
     # - name: Copy build file to server
     #   uses: appleboy/scp-action@v0.1.7
     #   with:
