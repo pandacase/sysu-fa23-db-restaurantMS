@@ -8,11 +8,11 @@ import FloatingMenu from '@/components/FloatingMenu.vue'
 import Modal from '@/components/Modal.vue'
 
 /* render the DataTable */
-const tablesColumns = ref(['id', 'table_id', 'type', 'customer_num'])
+const tablesColumns = ref(['id', 'type', 'customer_num'])
 
 /* render the Modal */
 const showModal = ref(false)
-const modalContentColumns = ref(['table_id', 'type', 'customer_num'])
+const modalContentColumns = ref(['type', 'customer_num'])
 const table_id = ref(null)
 const type = ref('')
 const customer_num = ref(0)
