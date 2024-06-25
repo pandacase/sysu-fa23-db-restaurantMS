@@ -5,63 +5,22 @@ name: CI/CD
 
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
+    branches: [ "server" ]
   pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
-
+    branches: [ "server" ]
+    
 jobs:
-  build-client:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout client code
-      uses: actions/checkout@v4
-      with:
-        path: client
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build client
-      run: npm run build
-
-    - name: Test client
-      run: npm test
-
-    - name: Deploy to Apache
-      env:
-        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-        VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
-      run: |
-        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@45.77.18.47 "rm -rf /var/www/html/*"
-        echo "$VPS_PASSWORD" | sshpass scp -r ./client/dist/* $VPS_USERNAME@45.77.18.47:/var/www/html/
-
   build-server:
-    if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'server/')
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout server code
       uses: actions/checkout@v4
-      with:
-        path: server
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20.x'
+        node-version: '18.x'
         cache: 'npm'
 
     - name: Install dependencies
@@ -73,9 +32,34 @@ jobs:
     - name: Test server
       run: npm test
 
-    - name: Deploy and start server with PM2
-      env:
-        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-        VPS_PASSWORD: ${{ secrets.VPS_PASSWORD }}
-      run: |
-        echo "$VPS_PASSWORD" | sshpass ssh $VPS_USERNAME@45.77.18.47 "cd /path/to/your/server && npm install && pm2 start src/app.js"
+    # - name: Copy build file to server
+    #   uses: appleboy/scp-action@v0.1.7
+    #   with:
+    #     host: ${{ secrets.VPS_IP_ADDRESS }}
+    #     username: ${{ secrets.VPS_USERNAME }}
+    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+    #     port: 80
+    #     source: "./*"
+    #     target: /var/www
+
+    # - name: Deploy on Apache
+    #   uses: appleboy/ssh-action@v1.0.3
+    #   with:
+    #     host: ${{ secrets.VPS_IP_ADDRESS }}
+    #     username: ${{ secrets.VPS_USERNAME }}
+    #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+    #     port: 80
+    #     script: |
+    #       whoami
+    #       rm -rf /var/www/html/*
+
+    - name: Start server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_IP_ADDRESS }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        port: 80
+        script: |
+          npm install
+          pm2 start src/app.js
