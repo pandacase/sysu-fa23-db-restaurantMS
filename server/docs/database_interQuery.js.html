@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>database/interQuery.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#menuAdd">menuAdd</a></li><li><a href="global.html#menuDelete">menuDelete</a></li><li><a href="global.html#menuGet">menuGet</a></li><li><a href="global.html#menuUpdate">menuUpdate</a></li><li><a href="global.html#orderAdd">orderAdd</a></li><li><a href="global.html#orderDelete">orderDelete</a></li><li><a href="global.html#orderGet">orderGet</a></li><li><a href="global.html#orderUpdate">orderUpdate</a></li><li><a href="global.html#tableAdd">tableAdd</a></li><li><a href="global.html#tableClear">tableClear</a></li><li><a href="global.html#tableDelete">tableDelete</a></li><li><a href="global.html#tableGet">tableGet</a></li><li><a href="global.html#tableUpdate">tableUpdate</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">database/interQuery.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+
+class interQuery {
+  constructor(connection) {
+    this.connection = connection;
+  }
+
+  /**
+   * Retrieve item list for a specific order from the database.
+   * 
+   * @param {number} orderId - The ID of the order to retrieve the 
+   * item list for.
+   * 
+   * @returns {Array} - An array containing the items and their 
+   * quantities for the specified order.
+   */
+  async getItemListForOrder(orderId) {
+    const itemList = await mysqlQuery(`
+      SELECT
+        d.name, 
+        od.quantity
+      FROM 
+        order_details od
+      JOIN 
+        dishes d ON od.dish_id = d.id
+      WHERE 
+        od.order_id = ?
+      ORDER BY
+    `, [orderId]);
+  
+    return itemList.map(item => ({
+      name: item.name,
+      quantity: item.quantity
+    }));
+  }
+
+  /**
+   * Insert a new order into the database with the specified table ID.
+   * 
+   * @param {number} table_id - The ID of the table for the new order.
+   * 
+   * @returns {number} - The ID of the newly inserted order.
+   * 
+   * @throws {Error} - If the insertion into the "orders" table fails.
+   */
+  async insertOrder(table_id) {
+    const query = `
+      INSERT INTO orders (time_added, table_id) 
+      VALUES (CURRENT_TIMESTAMP, ?);`;
+    const [result] = await this.connection.query(query, [table_id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Insert into [ orders ] failed.");
+    }
+    return result.insertId;
+  }
+
+  /**
+   * Update the number of customers for a specific table in the database.
+   * 
+   * @param {number} table_id - The ID of the table to update.
+   * @param {number} customer_num - The new number of customers 
+   * for the table.
+   * 
+   * @throws {Error} - If the update operation on the "tables" 
+   * table fails.
+   */
+  async updateTable(table_id, customer_num) {
+    const query = "UPDATE tables SET customer_num = ? WHERE id = ?;";
+    const [result] = await this.connection.query(
+      query, [customer_num, table_id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Update [ tables ] failed.");
+    }
+  }
+
+  /**
+   * Insert order details into the database for a specific order, dish, 
+   * quantity, and sub-total.
+   * 
+   * @param {number} order_id - The ID of the order for the details.
+   * @param {number} dish_id - The ID of the dish for the order.
+   * @param {number} quantity - The quantity of the dish in the order.
+   * @param {number} sub_total - The sub-total for the dish in 
+   * the order.
+   * 
+   * @throws {Error} - If the insertion into the "order_details" 
+   * table fails.
+   */
+  async insertOrderDetails(order_id, dish_id, quantity, sub_total) {
+    const query = `
+      INSERT INTO order_details (order_id, dish_id, quantity, sub_total)
+      VALUES (?, ?, ?, ?);`;
+    const [result] = await this.connection.query(
+      query, [order_id, dish_id, quantity, sub_total]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Insert into [ order_details ] failed.");
+    }
+  }
+
+  /**
+   * Delete order details from the database for a specific order.
+   * 
+   * @param {number} order_id - The ID of the order for which 
+   * the details 
+   * are to be deleted.
+   * 
+   * @throws {Error} - If the deletion from the "order_details" 
+   * table fails.
+   */
+  async deleteOrderDetails(order_id) {
+    const query = "DELETE FROM order_details WHERE order_id = ?;"
+    const [result] = await this.connection.query(query, [order_id]);
+    if (result.affectedRows &lt; 1) {
+      throw new Error("Delete from [ order_details ] failed.");
+    }
+  }
+
+  /**
+   * Delete a specific order from the database.
+   * 
+   * @param {number} id - The ID of the order to be deleted.
+   * 
+   * @throws {Error} - If the deletion from the "orders" table fails.
+   */
+  async deleteOrder(id) {
+    const query = "DELETE FROM orders WHERE id = ?;";
+    const [result] = await this.connection.query(query, [id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Delete from [ order ] failed.");
+    }
+  }
+
+  /**
+   * Update the table ID for a specific order in the database.
+   * 
+   * @param {number} order_id - The ID of the order to be updated.
+   * @param {number} table_id - The new table ID for the order.
+   * 
+   * @throws {Error} - If the update operation on the "orders" 
+   * table fails.
+   */
+  async updateOrder(order_id, table_id) {
+    const query = "UPDATE orders SET table_id = ? WHERE id = ?;";
+    const [result] = await this.connection.query(
+      query, [table_id, order_id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Update [ order ] failed.");
+    }
+  }
+}
+
+module.exports = interQuery;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.3</a> on Tue Jun 25 2024 20:11:40 GMT+0800 (China Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
