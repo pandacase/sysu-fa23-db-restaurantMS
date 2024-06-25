@@ -10,7 +10,7 @@ on:
     branches: [ "server" ]
     
 jobs:
-  build-server:
+  deploy-on-server:
     environment: VPS_ENVIR
     runs-on: ubuntu-latest
 
@@ -46,12 +46,22 @@ jobs:
         script: |
           pm2 stop app
           pm2 delete app
-          rm -rf /var/www/server/*
-          cp -r /root/server/* /var/www/server
-          pm2 start /var/www/server/src/app.js
-    
+          cd /var/www
+          rm -rf ./server
+          cp -r /root/server /var/www/server
+          cd /var/www/server
+          pm2 start src/app.js
+
+  push-to-dockerhub:
+    environment: VPS_ENVIR
+    runs-on: ubuntu-latest
+
+    steps:
     # Build and Push Docker images
     # Images can be pulled from DockerHub on remote servers
+    - name: Checkout client code
+      uses: actions/checkout@v4
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     
@@ -68,3 +78,4 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/rest-server:latest
+
