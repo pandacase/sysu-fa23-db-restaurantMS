@@ -9,9 +9,9 @@ dotenv.config();
 // 创建连接池
 const pool = mysql.createPool({
   host: process.env.HOST,
-  user: process.env.USERNAME,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
   waitForConnections: true,
   connectionLimit: 100, // 可以根据需要调整连接数

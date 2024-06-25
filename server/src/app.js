@@ -9,9 +9,9 @@ dotenv.config();
 
 console.log('Initializing...')
 
-const menu = require('./views/menu');
-const order = require('./views/order');
-const table = require('./views/table');
+const menu = require('./routes/menuRoutes');
+const order = require('./routes/orderRoutes');
+const table = require('./routes/tableRoutes');
 
 // set the router
 app.use('/menu', menu);
@@ -19,4 +19,4 @@ app.use('/order', order);
 app.use('/table', table);
 
 // run the app
-app.listen(process.env.PORT, () => console.log('App is running'));
+app.listen(process.env.APP_PORT, () => console.log('App is running'));
