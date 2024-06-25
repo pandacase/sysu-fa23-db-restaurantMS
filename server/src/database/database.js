@@ -166,7 +166,9 @@ class dbService {
     try {
       connection = await pool.getConnection();
 
-      const result = await mysqlQuery(`
+      const inter = new interQuery(connection);
+
+      const query = `
         SELECT 
           o.id AS order_id, 
           o.time_added, 
@@ -177,13 +179,13 @@ class dbService {
         JOIN 
           order_details od ON o.id = od.order_id
         GROUP BY 
-          o.id, o.time_added, o.table_id
-      `);
+          o.id, o.time_added, o.table_id;`;
+      const [result] = await connection.query(query);
       
       const formattedResult = await Promise.all(
         result.map(async order => ({
           ...order,
-          item_list: await getItemListForOrder(order.order_id)
+          item_list: await inter.getItemListForOrder(order.order_id)
       })));
 
       return formattedResult;

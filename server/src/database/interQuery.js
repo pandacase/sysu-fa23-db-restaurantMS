@@ -15,7 +15,7 @@ class interQuery {
    * quantities for the specified order.
    */
   async getItemListForOrder(orderId) {
-    const itemList = await mysqlQuery(`
+    const query = `
       SELECT
         d.name, 
         od.quantity
@@ -24,14 +24,10 @@ class interQuery {
       JOIN 
         dishes d ON od.dish_id = d.id
       WHERE 
-        od.order_id = ?
-      ORDER BY
-    `, [orderId]);
-  
-    return itemList.map(item => ({
-      name: item.name,
-      quantity: item.quantity
-    }));
+        od.order_id = ?;`;
+
+    const [result] = await this.connection.query(query, [orderId]);
+    return result;
   }
 
   /**
