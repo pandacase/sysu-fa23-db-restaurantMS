@@ -62,16 +62,12 @@ insert into dishes (name, price, description) values ("Pile 'Em Up", 36.6, "A ri
 insert into orders (time_added, table_id) values ("2024/6/24 10:56:30", 1);
 insert into orders (time_added, table_id) values ("2024/6/24 10:56:32", 2);
 insert into orders (time_added, table_id) values ("2024/6/24 10:56:33", 3);
-insert into orders (time_added, table_id) values ("2024/6/24 10:56:34", 4);
-insert into orders (time_added, table_id) values ("2024/6/24 10:56:35", 5);
-insert into orders (time_added, table_id) values ("2024/6/24 10:56:36", 6);
-insert into orders (time_added, table_id) values ("2024/6/24 10:56:37", 7);
-insert into orders (time_added, table_id) values ("2024/6/24 10:56:38", 8);
 -- order_details init
 -- 1. POST(2024/6/24 10:56:30")
 insert into order_details (order_id, dish_id, quantity, sub_total) values (1, 1, 2, 7.96);
 insert into order_details (order_id, dish_id, quantity, sub_total) values (1, 2, 1, 648);
-
+insert into order_details (order_id, dish_id, quantity, sub_total) values (2, 2, 1, 648);
+insert into order_details (order_id, dish_id, quantity, sub_total) values (3, 3, 1, 92.8);
 
 create user admin;
 
@@ -80,6 +76,6 @@ grant all on restaurant.orders to admin;
 grant all on restaurant.tables to admin;
 grant all on restaurant.order_details to admin;
 
-ALTER USER 'admin' IDENTIFIED WITH mysql_native_password BY '1234';
-flush privileges;
+-- ALTER USER 'admin' IDENTIFIED WITH mysql_native_password BY '1234';
+-- flush privileges;
 

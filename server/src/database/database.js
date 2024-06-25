@@ -181,11 +181,17 @@ class dbService {
     let connection;
     try {
       connection = await pool.getConnection();
-      const query = "DELETE FROM orders WHERE id = ?;";
-      const [result] = await connection.query(query, [id]);
-      return result.affectedRows === 1;
+      await connection.beginTransaction();
+
+      const inter = new interQuery(connection);
+      await inter.deleteOrderDetails(id);
+      await inter.deleteOrder(id);
+      
+      await connection.commit();
+      return true;
     } catch (err) {
-      console.error("Error during deleting data:", err);
+      console.error("Error during dbService::deleteByIdFromOrders:", err);
+      connection.rollback();
       throw err;
     } finally {
       if (connection) {
@@ -194,20 +200,40 @@ class dbService {
     }
   }
 
-  async updateOrder(id, item_list, total_price) {
+  async updateOrder(id, item_list, table_id) {
+    let connection;
     try {
-      const response = await new Promise((resolve, reject) => {
-        const query = "UPDATE orders SET item_list = ?, total_price = ? WHERE id = ?;";
-        const item_list_json = JSON.stringify(item_list);
-        connection.query(query, [item_list_json, total_price, id], (err, result) => {
-          if (err) reject(new Error(err.message));
-          resolve(result.affectedRows);
-        });
-      });
-      console.log(response);
-      return response === 1 ? true : false;
-    } catch (err) {
-      console.log(err);
+      connection = await pool.getConnection();
+      await connection.beginTransaction();
+
+      const inter = new interQuery(connection);
+      // Step 1, update table_id
+      await inter.updateOrder(id, table_id);
+      // Step 2, update item_list in order_details
+      // Step 2.1, delete original order_details related
+      await inter.deleteOrderDetails(id);
+      // Step 2.2, add new item_list -> order_details
+      const dishNames = item_list.map(item => item.name);
+      const [dishes] = await connection.query(
+        "SELECT id, price FROM dishes WHERE name IN (?)", [dishNames]);
+  
+      for (let i = 0; i < item_list.length; i++) {
+        const dish = item_list[i];
+        const dishInfo = dishes.find(d => d.name === dish.name);
+        const subTotal = dish.quantity * dishInfo.price;
+        await inter.insertOrderDetails(orderId, dishInfo.id, dish.quantity, subTotal);
+      }
+  
+      await connection.commit();
+      return true;
+    } catch {
+      console.error("Error during dbService::updateOrder:", err);
+      connection.rollback();
+      throw err;
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
   }
 
@@ -224,7 +250,7 @@ class dbService {
       const [rows] = await connection.query(query);
       return rows;
     } catch {
-      console.error("Error during the query execution:", err);
+      console.error("Error during dbService::getAllDataFromTables:", err);
       throw err;
     } finally {
       if (connection) {
@@ -242,7 +268,7 @@ class dbService {
       const [result] = await connection.query(query, [table_id, type, customer_num]);
       return result.affectedRows === 1;
     } catch {
-      console.error("Error during inserting data:", err);
+      console.error("Error during dbService::insertToTables:", err);
       throw err;
     } finally {
       if (connection) {
@@ -260,7 +286,7 @@ class dbService {
       const [result] = await connection.query(query, [id]);
       return result.affectedRows === 1;
     } catch (err) {
-      console.error("Error during deleting data:", err);
+      console.error("Error during dbService::deleteByIdFromTables:", err);
       throw err;
     } finally {
       if (connection) {
@@ -278,7 +304,7 @@ class dbService {
       const [result] = await connection.query(query, [table_id, type, customer_num, id]);
       return result.affectedRows === 1;
     } catch {
-      console.error("Error during updating data:", err);
+      console.error("Error during dbService::updateTable:", err);
       throw err;
     } finally {
       if (connection) {
@@ -289,18 +315,19 @@ class dbService {
 
   // unuse
   async clearTableById(id) {
+    let connection;
     try {
-      const response = await new Promise((resolve, reject) => {
-        const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
-        connection.query(query, [id], (err, result) => {
-          if (err) reject(new Error(err.message));
-          resolve(result.affectedRows);
-        });
-      });
-      console.log(response);
-      return response === 1 ? true : false;
-    } catch (err) {
-      console.log(err);
+      connection = await pool.getConnection();
+      const query = "UPDATE tables SET customer_num = 0 WHERE id = ?;";
+      const [result] = await connection.query(query, [id]);
+      return result.affectedRows === 1;
+    } catch {
+      console.error("Error during dbService::clearTableById:", err);
+      throw err;
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
   }
 }

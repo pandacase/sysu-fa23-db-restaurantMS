@@ -29,6 +29,30 @@ class interQuery {
       throw new Error("Insert into [ order_details ] failed.");
     }
   }
+
+  async deleteOrderDetails(order_id) {
+    const query = "DELETE FROM order_details WHERE order_id = ?;"
+    const [result] = await this.connection.query(query, [order_id]);
+    if (result.affectedRows < 1) {
+      throw new Error("Delete from [ order_details ] failed.");
+    }
+  }
+
+  async deleteOrder(id) {
+    const query = "DELETE FROM orders WHERE id = ?;";
+    const [result] = await this.connection.query(query, [id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Delete from [ order ] failed.");
+    }
+  }
+
+  async updateOrder(id, table_id) {
+    const query = "UPDATE orders SET table_id = ? WHERE id = ?;";
+    const [result] = await this.connection.query(query, [table_id, id]);
+    if (result.affectedRows !== 1) {
+      throw new Error("Update [ order ] failed.");
+    }
+  }
 }
 
 module.exports = interQuery;

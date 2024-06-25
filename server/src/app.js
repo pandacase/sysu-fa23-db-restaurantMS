@@ -7,6 +7,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
+console.log('Initializing...')
+
 const menu = require('./views/menu');
 const order = require('./views/order');
 const table = require('./views/table');
