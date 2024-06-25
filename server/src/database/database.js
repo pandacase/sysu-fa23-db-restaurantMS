@@ -170,7 +170,7 @@ class dbService {
 
       const query = `
         SELECT 
-          o.id AS order_id, 
+          o.id, 
           o.time_added, 
           o.table_id,
           SUM(od.sub_total) AS total_price
@@ -185,7 +185,7 @@ class dbService {
       const formattedResult = await Promise.all(
         result.map(async order => ({
           ...order,
-          item_list: await inter.getItemListForOrder(order.order_id)
+          item_list: await inter.getItemListForOrder(order.id)
       })));
 
       return formattedResult;
@@ -223,11 +223,14 @@ class dbService {
   
       const orderId = await inter.insertOrder(table_id);
       await inter.updateTable(table_id, customer_num);
-  
+      
+      console.log(item_list);
       const dishNames = item_list.map(item => item.name);
       const [dishes] = await connection.query(
         `SELECT id, name, price FROM dishes 
         WHERE name IN (?)`, [dishNames]);
+
+
   
       for (let i = 0; i < item_list.length; i++) {
         const dish = item_list[i];
