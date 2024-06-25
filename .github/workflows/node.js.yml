@@ -42,6 +42,7 @@ jobs:
           cd /var/www/server
           npm install
           pm2 start src/app.js
+          node -v
 
   push-to-dockerhub:
     environment: VPS_ENVIR
