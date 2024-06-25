@@ -1,0 +1,138 @@
+{
+  "Insert": [
+    {
+      "name": "case1",
+      "input": {
+        "name": "Taro ice-cream",
+        "price": "3.98",
+        "description": "Great dessert, liked by Asta."
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "input": {
+        "name": "Wine",
+        "price": "648",
+        "description": "Topaz recommends."
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "input": {
+        "name": "Snow on the Hearth",
+        "price": "56",
+        "description": "Kamisato Ayaka's specialty."
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "input": {
+        "name": "Minty Fruit Tea",
+        "price": "13.8",
+        "description": "A cooling and refreshing drink."
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "input": {
+        "name": "Pile 'Em Up",
+        "price": "36.6",
+        "description": "A rich, meaty dish. A pile of meat and cheese."
+      },
+      "expect": true
+    }
+  ],
+  "Update": [
+    {
+      "name": "case1",
+      "input": {
+        "id": "1",
+        "name": "Taro ice-cream",
+        "price": "39.8",
+        "description": "Great dessert, liked by Asta."
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "input": {
+        "id": "2",
+        "name": "AAA_wine",
+        "price": "648",
+        "description": "Good taste."
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "input": {
+        "id": "2",
+        "name": "S on the Hearth",
+        "price": "56",
+        "description": "Kamisato Ayaka's specialty."
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "input": {
+        "id": "4",
+        "name": "Pile Up",
+        "price": "13.8",
+        "description": "A cooling and refreshing drink."
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "input": {
+        "id": "5",
+        "name": "M Tea",
+        "price": "36.6",
+        "description": "A rich, meaty dish. A pile of meat and cheese."
+      },
+      "expect": true
+    }
+  ],
+  "Del": [
+    {
+      "name": "case1",
+      "params": {
+        "id": "1"
+      },
+      "expect": true
+    },
+    {
+      "name": "case2",
+      "params": {
+        "id": "2"
+      },
+      "expect": true
+    },
+    {
+      "name": "case3",
+      "params": {
+        "id": "3"
+      },
+      "expect": true
+    },
+    {
+      "name": "case4",
+      "params": {
+        "id": "4"
+      },
+      "expect": true
+    },
+    {
+      "name": "case5",
+      "params": {
+        "id": "5"
+      },
+      "expect": true
+    }
+  ]
+}
