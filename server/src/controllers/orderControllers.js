@@ -13,9 +13,10 @@ exports.orderGet = (request, response) => {
 
 exports.orderAdd = (request, response) => {
   const { item_list } = request.body;
-  const { total_price } = request.body;
+  const { table_id } = request.body;
+  const { customer_num } = request.body;
   const db = dbService.getDbServiceInstance();
-  const result = db.insertToOrders(item_list, total_price);
+  const result = db.insertToOrders(item_list, table_id, customer_num);
   
   result
   .then(data => response.json({success : data}))
@@ -35,9 +36,9 @@ exports.orderDelete = (request, response) => {
 exports.orderUpdate = (request, response) => {
   const { id } = request.body;
   const { item_list } = request.body;
-  const { total_price } = request.body;
+  const { table_id } = request.body;
   const db = dbService.getDbServiceInstance();
-  const result = db.updateOrder(id, item_list, total_price);
+  const result = db.updateOrder(id, item_list, table_id);
 
   result
   .then(data => response.json({success : data}))
