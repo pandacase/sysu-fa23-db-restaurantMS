@@ -5,6 +5,26 @@ class interQuery {
     this.connection = connection;
   }
 
+  async getItemListForOrder(orderId) {
+    const itemList = await mysqlQuery(`
+      SELECT
+        d.name, 
+        od.quantity
+      FROM 
+        order_details od
+      JOIN 
+        dishes d ON od.dish_id = d.id
+      WHERE 
+        od.order_id = ?
+      ORDER BY
+    `, [orderId]);
+  
+    return itemList.map(item => ({
+      name: item.name,
+      quantity: item.quantity
+    }));
+  }
+
   async insertOrder(table_id) {
     const query = "INSERT INTO orders (time_added, table_id) VALUES (CURRENT_TIMESTAMP, ?);";
     const [result] = await this.connection.query(query, [table_id]);
@@ -46,9 +66,9 @@ class interQuery {
     }
   }
 
-  async updateOrder(id, table_id) {
+  async updateOrder(order_id, table_id) {
     const query = "UPDATE orders SET table_id = ? WHERE id = ?;";
-    const [result] = await this.connection.query(query, [table_id, id]);
+    const [result] = await this.connection.query(query, [table_id, order_id]);
     if (result.affectedRows !== 1) {
       throw new Error("Update [ order ] failed.");
     }

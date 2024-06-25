@@ -1,7 +1,7 @@
 
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
-const interQuery = require('./inter_query');
+const interQuery = require('./interQuery');
 let instance = null;
 dotenv.config();
 
@@ -111,18 +111,38 @@ class dbService {
   ////////////////////////////////////////////////////////////////
   
   /**
+   * Select {order_id, time_added, table_id, item_list, total_price}
+   * list from orders (JOIN order_details, JOIN dishes).
    * 
-   * @returns 
+   * @returns Data table.
    */
   async getAllDataFromOrders() {
     let connection;
     try {
       connection = await pool.getConnection();
-      const query = "SELECT * FROM orders;";
-      const [rows] = await connection.query(query);
-      return rows;
+
+      const result = await mysqlQuery(`
+        SELECT 
+          o.id AS order_id, 
+          o.time_added, 
+          o.table_id,
+          SUM(od.sub_total) AS total_price
+        FROM 
+          orders o
+        JOIN 
+          order_details od ON o.id = od.order_id
+        GROUP BY 
+          o.id, o.time_added, o.table_id
+      `);
+      
+      const formattedResult = await Promise.all(result.map(async order => ({
+        ...order,
+        item_list: await getItemListForOrder(order.order_id)
+      })));
+
+      return formattedResult;
     } catch {
-      console.error("Error during the query execution:", err);
+      console.error("Error during dbService::getAllDataFromOrders:", err);
       throw err;
     } finally {
       if (connection) {
@@ -140,7 +160,7 @@ class dbService {
    * @param {number} table_id - The table number to which the order belongs
    * @param {number} customer_num - The number of customers to which the order belongs
    * 
-   * @returns True if the whole Transaction is commited
+   * @returns True if the whole Transaction is commited.
    */
   async insertToOrders(item_list, table_id, customer_num) {
     let connection;
@@ -177,6 +197,13 @@ class dbService {
     }
   }
 
+  /**
+   * Delete from orders by id.
+   * 
+   * @param {number} id - orders primary key: id
+   * 
+   * @returns True if the whole Transaction is commited.
+   */
   async deleteByIdFromOrders(id) {
     let connection;
     try {
@@ -200,6 +227,17 @@ class dbService {
     }
   }
 
+  /**
+   * Update order with id.
+   * 
+   * @param {number} id 
+   * @param {Object[]} item_list - Order's item list
+   * @param {string} item_list[].name - A dish's name
+   * @param {number} item_list[].quantity - A dish's quantity
+   * @param {number} table_id - A table's id
+   * 
+   * @returns True if the whole Transaction is commited.
+   */
   async updateOrder(id, item_list, table_id) {
     let connection;
     try {
@@ -260,12 +298,12 @@ class dbService {
   }
 
   // insert
-  async insertToTables(table_id, type, customer_num) {
+  async insertToTables(type, customer_num) {
     let connection;
     try {
       connection = await pool.getConnection();
-      const query = "INSERT INTO tables (table_id, type, customer_num) VALUES(?, ?, ?);";
-      const [result] = await connection.query(query, [table_id, type, customer_num]);
+      const query = "INSERT INTO tables (type, customer_num) VALUES(?, ?, ?);";
+      const [result] = await connection.query(query, [type, customer_num]);
       return result.affectedRows === 1;
     } catch {
       console.error("Error during dbService::insertToTables:", err);
@@ -296,12 +334,12 @@ class dbService {
   }
 
   // update
-  async updateTable(id, table_id, type, customer_num) {
+  async updateTable(id, type, customer_num) {
     let connection;
     try {
       connection = await pool.getConnection();
-      const query = "UPDATE tables SET table_id = ?, type = ?, customer_num = ? WHERE id = ?;";
-      const [result] = await connection.query(query, [table_id, type, customer_num, id]);
+      const query = "UPDATE tables SET type = ?, customer_num = ? WHERE id = ?;";
+      const [result] = await connection.query(query, [type, customer_num, id]);
       return result.affectedRows === 1;
     } catch {
       console.error("Error during dbService::updateTable:", err);
