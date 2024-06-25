@@ -44,7 +44,7 @@ class interQuery {
    * @throws {Error} - If the insertion into the "orders" table fails.
    */
   async insertOrder(table_id) {
-    const query = `"\`
+    const query = `
       INSERT INTO orders (time_added, table_id) 
       VALUES (CURRENT_TIMESTAMP, ?);`;
     const [result] = await this.connection.query(query, [table_id]);
