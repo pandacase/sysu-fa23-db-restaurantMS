@@ -38,7 +38,7 @@ jobs:
         target: /root/server
 
     - name: Deploy, start the new backend app
-      uses: appleboy/ssh-action@v0.1.7
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.VPS_IP_ADDRESS }}
         username: ${{ secrets.VPS_USERNAME }}
