@@ -39,13 +39,13 @@ jobs:
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
           nvm use 18
           node -v
-          # pm2 stop app
-          # pm2 delete app
+          pm2 stop app
+          pm2 delete app
           rm -rf /var/www/server/*
           mv /root/server/* /var/www/server/
           cd /var/www/server
-          # npm install
-          # pm2 start src/app.js
+          npm install
+          pm2 start src/app.js
 
   push-to-dockerhub:
     environment: VPS_ENVIR
