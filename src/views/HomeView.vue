@@ -14,7 +14,7 @@ export default {
 <template>
   <div class="home">
     <img alt="logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Restaurant Management App"/>
+    <HelloWorld msg="Welcome to Restaurant Management App👍👍👍"/>
   </div>
 </template>
 
