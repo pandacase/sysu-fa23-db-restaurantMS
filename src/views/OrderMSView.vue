@@ -20,7 +20,7 @@ const total_price = ref(0)
 const table_id = ref(0)
 const dishes_list = ref(null)
 watchEffect(async () => {
-  const data = await fetchData('http://127.0.0.1:5000/menu')
+  const data = await fetchData('http://45.77.18.47:5000/menu')
   dishes_list.value = data;
 })
 
@@ -60,7 +60,7 @@ function capitalize(str) {
 }
 
 const emit = defineEmits()
-const API_URL = `http://127.0.0.1:5000${route.path}`
+const API_URL = `http://45.77.18.47:5000${route.path}`
 
 function clearRef() {
   id.value = null
